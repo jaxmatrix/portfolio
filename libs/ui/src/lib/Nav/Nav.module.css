@@ -1,0 +1,67 @@
+/* Ported verbatim from index.html — header.nav / .brand / nav.links / .nav-cta */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: rgba(233, 234, 227, 0.82);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.brand {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 16px;
+}
+
+.brand span {
+  color: var(--plasma);
+}
+
+.links {
+  display: flex;
+  gap: 22px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+}
+
+.links a {
+  color: var(--ink-2);
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: 0.18s;
+}
+
+.links a:hover {
+  color: var(--ink);
+  border-color: var(--plasma);
+}
+
+.cta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  border: 1px solid var(--ink);
+  padding: 7px 13px;
+  color: var(--ink);
+  transition: 0.18s;
+  white-space: nowrap;
+}
+
+.cta:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (max-width: 720px) {
+  .links {
+    display: none;
+  }
+}

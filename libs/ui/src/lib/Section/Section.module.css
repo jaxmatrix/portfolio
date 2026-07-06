@@ -1,0 +1,11 @@
+/* Ported verbatim from index.html — section + .wrap */
+.section {
+  padding: 104px 0 44px;
+  position: relative;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}

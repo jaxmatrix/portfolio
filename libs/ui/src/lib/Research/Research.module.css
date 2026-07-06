@@ -1,0 +1,54 @@
+/* Ported verbatim from index.html — .pub / .award */
+.pub {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.pub:first-child {
+  padding-top: 0;
+}
+
+.pubT {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.feat {
+  color: var(--plasma);
+}
+
+.pubM {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 5px;
+}
+
+.cite {
+  color: var(--amber);
+}
+
+.award {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14.5px;
+}
+
+.award:first-of-type {
+  padding-top: 0;
+}
+
+.award b {
+  font-family: var(--display);
+  font-weight: 700;
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.awM {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}

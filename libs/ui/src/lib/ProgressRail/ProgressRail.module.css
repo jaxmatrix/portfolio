@@ -1,0 +1,64 @@
+/* Ported verbatim from index.html — .rail and its toolpath position head */
+.rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: var(--rail);
+  z-index: 40;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px 0 40px;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  width: 2px;
+  background: var(--line-soft);
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(var(--plasma), var(--plasma-bright));
+  box-shadow: 0 0 10px rgba(169, 63, 191, 0.5);
+}
+
+.head {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px;
+  height: 9px;
+  background: var(--amber-bright);
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--amber), 0 0 12px rgba(216, 135, 31, 0.7);
+  top: 0;
+  transition: top 0.12s linear;
+}
+
+.label {
+  position: absolute;
+  top: 16px;
+  left: -20px;
+  transform: translateX(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .rail {
+    display: none;
+  }
+}

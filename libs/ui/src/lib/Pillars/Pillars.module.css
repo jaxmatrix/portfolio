@@ -1,0 +1,40 @@
+/* Ported verbatim from index.html — .pillars / .pillar */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+}
+
+.pillar {
+  background: var(--paper);
+  padding: 26px 24px;
+}
+
+.n {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+}
+
+.pillar h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  margin: 10px 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.pillar p {
+  font-size: 14.5px;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+}

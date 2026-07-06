@@ -1,4 +1,8 @@
 import './global.css';
+import { Nav, ProgressRail } from '@portfolio/ui';
+import { Contact } from '../components/sections';
+import { navLinks, resumeCta } from '../content/portfolio';
+import styles from '../components/sections/sections.module.css';
 
 export const metadata = {
   title: 'Jai Shukla — Builder · Hardware ↔ Software',
@@ -21,7 +25,22 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="paper-surface">{children}</body>
+      <body className="paper-surface">
+        <Nav
+          brand={
+            <>
+              JAI<span>/</span>SHUKLA
+            </>
+          }
+          links={navLinks}
+          cta={resumeCta}
+        />
+        <ProgressRail />
+        <main id="top" className={styles.main}>
+          {children}
+        </main>
+        <Contact />
+      </body>
     </html>
   );
 }

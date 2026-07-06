@@ -2,8 +2,9 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Next.js options go here
-  // See: https://nextjs.org/docs/app/api-reference/config/next-config-js
+  // Consume the workspace UI library from source so per-file "use client"
+  // boundaries are preserved (a bundled dist would strip the directive).
+  transpilePackages: ['@portfolio/ui'],
 };
 
 module.exports = nextConfig;

@@ -1,0 +1,47 @@
+/* Ported verbatim from index.html — .contact-grid / .cline */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 720px;
+}
+
+.cline {
+  background: var(--ink);
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  transition: 0.18s;
+}
+
+.cline:hover {
+  background: #202422;
+}
+
+.k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #92978f;
+}
+
+.v {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  color: var(--paper);
+}
+
+.cline:hover .v {
+  color: var(--plasma-bright);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

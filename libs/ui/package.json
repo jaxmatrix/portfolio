@@ -10,8 +10,9 @@
     ".": {
       "@portfolio/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "development": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./theme.css": "./src/styles/theme.css",
     "./tokens.css": "./src/styles/tokens.css"
