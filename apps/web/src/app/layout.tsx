@@ -8,6 +8,7 @@ export const metadata = {
   title: 'Jai Shukla — Builder · Hardware ↔ Software',
   description:
     'Jai Shukla builds the whole stack — precision machines, embedded firmware, full-stack software, and AI systems.',
+  icons: { icon: '/logo.svg', shortcut: '/logo.svg', apple: '/logo.svg' },
 };
 
 export default function RootLayout({
@@ -28,9 +29,23 @@ export default function RootLayout({
       <body className="paper-surface">
         <Nav
           brand={
-            <>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 10,
+                color: 'var(--ink)',
+              }}
+            >
+              <img
+                src="/logo.svg"
+                alt=""
+                width={26}
+                height={26}
+                style={{ display: 'block' }}
+              />
               JAI<span>/</span>SHUKLA
-            </>
+            </span>
           }
           links={navLinks}
           cta={resumeCta}
