@@ -150,6 +150,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@portfolio/ui':
+        specifier: workspace:*
+        version: link:../../libs/ui
       next:
         specifier: ~16.1.6
         version: 16.1.7(@babel/core@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(sass@1.101.0)
