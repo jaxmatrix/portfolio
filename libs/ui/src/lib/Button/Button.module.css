@@ -1,0 +1,31 @@
+/* Ported verbatim from index.html — .btn / .btn.primary */
+.btn {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 12px 20px;
+  border: 1px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.18s;
+  cursor: pointer;
+  background: none;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.btn:hover {
+  border-color: var(--plasma);
+  color: var(--plasma);
+}
+
+.primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.primary:hover {
+  background: var(--plasma);
+  border-color: var(--plasma);
+  color: #fff;
+}

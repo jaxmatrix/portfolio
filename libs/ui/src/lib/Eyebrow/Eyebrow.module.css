@@ -1,0 +1,8 @@
+/* Ported verbatim from index.html — .eyebrow */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}

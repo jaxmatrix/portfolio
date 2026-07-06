@@ -1,0 +1,13 @@
+/* Ported verbatim from index.html — .build-tag / .build-tag .yr */
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--plasma);
+}
+
+.yr {
+  color: var(--ink-3);
+  margin-left: 8px;
+}

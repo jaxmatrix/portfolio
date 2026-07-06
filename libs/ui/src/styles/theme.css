@@ -1,0 +1,27 @@
+/* =========================================================
+   @portfolio/ui — Tailwind v4 theme entry.
+   Import this from a Tailwind-enabled app (e.g. apps/web) to get both
+   the raw design tokens (:root vars) and matching utility classes
+   (bg-paper, text-ink, text-plasma, font-mono, font-display, …).
+   ========================================================= */
+@import './tokens.css';
+@import 'tailwindcss';
+
+/* `inline` resolves each utility to the :root custom property above,
+   so utilities and hand-written CSS Modules share one source of truth. */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-plasma: var(--plasma);
+  --color-plasma-bright: var(--plasma-bright);
+  --color-amber: var(--amber);
+  --color-amber-bright: var(--amber-bright);
+
+  --font-display: var(--display);
+  --font-body: var(--body);
+  --font-mono: var(--mono);
+}

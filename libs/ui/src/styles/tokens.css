@@ -1,0 +1,79 @@
+/* =========================================================
+   @portfolio/ui — design tokens + portable globals
+   Ported verbatim from the design reference (index.html).
+   Plain CSS, no build step — usable by any app or by Storybook.
+   ========================================================= */
+:root {
+  --paper: #e9eae3;
+  --paper-2: #e2e3db;
+  --surface: #f4f4ef;
+  --ink: #171a19;
+  --ink-2: #474b48;
+  --ink-3: #63665f;
+  --line: rgba(23, 26, 25, 0.16);
+  --line-soft: rgba(23, 26, 25, 0.08);
+  --grid: rgba(23, 26, 25, 0.032);
+  --plasma: #7c2e8c;
+  --plasma-bright: #a93fbf;
+  --amber: #b9660f;
+  --amber-bright: #d8871f;
+  --display: 'Archivo Expanded', 'Archivo', system-ui, sans-serif;
+  --body: 'Archivo', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --maxw: 1160px;
+  --rail: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--plasma);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--plasma);
+  outline-offset: 3px;
+}
+
+/* Paper + machinist grid backdrop. Split out from `body` so the Storybook
+   preview decorator can paint the same in-context surface around a story. */
+.paper-surface {
+  background-color: var(--paper);
+  color: var(--ink);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
