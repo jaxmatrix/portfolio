@@ -423,7 +423,7 @@ export const awards: AwardData[] = [
   },
 ];
 
-export const scholarUrl = 'https://scholar.google.com/citations?user=m6E0pHUAAAAJ';
+export const scholarUrl = 'https://scholar.google.com/citations?user=m6E0pHUAAAAJ&hl=en';
 
 export interface ContactLinkData {
   label: string;
@@ -433,11 +433,19 @@ export interface ContactLinkData {
 }
 
 export const contactLinks: ContactLinkData[] = [
-  { label: 'Email', value: 'jaishukla7768@gmail.com', href: 'mailto:jaishukla7768@gmail.com' },
-  { label: 'Phone', value: '+91 78729 13111', href: 'tel:+917872913111' },
-  { label: 'GitHub', value: 'github.com/… ↗', href: '#', external: true },
-  { label: 'LinkedIn', value: 'linkedin.com/in/… ↗', href: '#', external: true },
-  { label: 'GitLab', value: 'gitlab.com/… ↗', href: '#', external: true },
+  {
+    label: 'GitHub',
+    value: 'github.com/jaxmatrix ↗',
+    href: 'https://github.com/jaxmatrix',
+    external: true,
+  },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/jaxmatrix ↗',
+    href: 'https://www.linkedin.com/in/jaxmatrix/',
+    external: true,
+  },
+  { label: 'GitLab', value: 'gitlab.com/jaxmatrix2 ↗', href: 'https://gitlab.com/jaxmatrix2', external: true },
   { label: 'Scholar', value: 'Google Scholar ↗', href: scholarUrl, external: true },
 ];
 

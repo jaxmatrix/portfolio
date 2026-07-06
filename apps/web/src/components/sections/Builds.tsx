@@ -8,7 +8,7 @@ export function Builds() {
       id="builds"
       coord="WP-02"
       title="Featured builds"
-      note="▶ drop your clips into each slot"
+      note=""
     >
       {builds.map((build, i) => (
         <Reveal key={build.title} className={styles.buildItem}>
