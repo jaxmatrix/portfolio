@@ -6,5 +6,16 @@
     "next": "~16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "nx": {
+    "targets": {
+      "serve": {
+        "continuous": true,
+        "command": "next dev",
+        "options": {
+          "cwd": "apps/web"
+        }
+      }
+    }
   }
 }
