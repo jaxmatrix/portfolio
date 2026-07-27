@@ -1,0 +1,76 @@
+.wrap {
+  padding: 20px 22px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* Square, like everything else in this system. */
+.avatar {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.role {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--plasma);
+  margin: 3px 0 0;
+}
+
+.blurb {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.links {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  transition: 0.18s;
+}
+
+.link:hover {
+  color: var(--plasma);
+}
+
+.arrow {
+  color: var(--ink-3);
+  transition: 0.18s;
+}
+
+.link:hover .arrow {
+  color: var(--plasma);
+}

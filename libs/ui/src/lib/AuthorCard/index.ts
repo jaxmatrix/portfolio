@@ -1,0 +1,2 @@
+export { AuthorCard, default } from './AuthorCard';
+export type { AuthorCardProps } from './AuthorCard';

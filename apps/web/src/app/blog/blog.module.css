@@ -1,0 +1,324 @@
+/* Blog page shell.
+   Sits inside the root layout, which already supplies the fixed nav, the 64px
+   toolpath rail (via `.main { padding-left: var(--rail) }`) and the dark
+   contact footer.
+
+   Breakpoint note — 1040px is a blog-only breakpoint, deliberately above the
+   site's usual 900/860/820. At a 900px viewport the article column would be
+   900 − 64 rail − 56 padding − 300 sidebar − 48 gap = 432px, which is too
+   narrow to read. So the sidebar drops below the article at 1040px, and the
+   site's own 900px rule then removes the rail. */
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 48px;
+  /* Required for `position: sticky` on the sidebar — a grid item defaults to
+     `stretch`, which makes it full-height and sticky a no-op. */
+  align-items: start;
+}
+
+.side {
+  position: sticky;
+  top: 92px;
+  align-self: start;
+  /* The house hairline-grid recipe: 2px gaps over a soft line colour, with
+     each card painting itself back to paper. */
+  display: grid;
+  gap: 2px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.side > * {
+  background: var(--paper);
+}
+
+/* Shown only below 1040px, where a sidebar TOC would land under the article. */
+.inlineToc {
+  display: none;
+}
+
+@media (max-width: 1040px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .side {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    margin-top: 48px;
+  }
+
+  .stickyToc {
+    display: none;
+  }
+
+  .inlineToc {
+    display: block;
+  }
+}
+
+/* ---------- index header ---------- */
+
+.intro {
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin: 0 0 40px;
+}
+
+.featured {
+  margin-bottom: 40px;
+}
+
+/* ---------- empty state (no posts published yet) ---------- */
+
+.empty {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding: 64px 40px;
+  text-align: center;
+}
+
+/* Corner ticks, matching the card idiom. */
+.empty::before,
+.empty::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+}
+
+.empty::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.empty::after {
+  right: 12px;
+  bottom: 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.emptyCoord {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--plasma);
+  margin: 0 0 14px;
+}
+
+.emptyTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.emptyBody {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+.emptyActions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+@media (max-width: 720px) {
+  .empty {
+    padding: 44px 22px;
+  }
+}
+
+.listHead {
+  margin-bottom: 18px;
+}
+
+/* ---------- post page ---------- */
+
+.postHeader {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.postCoord {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--plasma);
+  margin: 0 0 12px;
+}
+
+.postTitle {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 5vw, 52px);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.postTitle em {
+  font-style: normal;
+  color: var(--plasma);
+}
+
+.postSummary {
+  font-size: clamp(17px, 2vw, 19px);
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin: 0 0 20px;
+}
+
+.postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.postMeta > * + *::before {
+  content: '·';
+  margin-right: 10px;
+  color: var(--line);
+}
+
+.postTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  margin-bottom: 36px;
+}
+
+.draft {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  padding: 2px 6px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* ---------- post footer ---------- */
+
+.postFooter {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.backLink {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  transition: 0.18s;
+}
+
+.backLink:hover {
+  color: var(--plasma);
+}
+
+/* ---------- sidebar sub-blocks ---------- */
+
+.sideCard {
+  padding: 20px 22px;
+}
+
+.sideHeading {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  margin: 0 0 14px;
+}
+
+.related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.relatedItem {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.relatedItem:last-child {
+  border-bottom: 0;
+}
+
+.relatedItem:first-child {
+  padding-top: 0;
+}
+
+.relatedLink {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  transition: 0.18s;
+}
+
+.relatedLink:hover {
+  color: var(--plasma);
+}
+
+.relatedMeta {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  margin-top: 4px;
+}

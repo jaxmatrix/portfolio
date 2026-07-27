@@ -1,0 +1,331 @@
+/* Long-form article styling, built on the same tokens as the rest of the site.
+   Hand-rolled rather than @tailwindcss/typography: the plugin ships rounded
+   corners, italic blockquotes and its own grey ramp, all of which this system
+   deliberately does not use.
+
+   Every rule is scoped under .prose (specificity 0,1,1) so a bare-element rule
+   from another CSS module can never win at equal specificity — Turbopack orders
+   modules by import order, which makes ties genuinely unpredictable. */
+
+.prose {
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.68;
+  color: var(--ink-2);
+}
+
+/* Flow spacing, so elements never need to know what follows them. */
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+/* Measure cap on text only — pre/table/figure stay full-column. */
+.prose > p,
+.prose > ul,
+.prose > ol,
+.prose > blockquote,
+.prose > h2,
+.prose > h3,
+.prose > h4 {
+  max-width: 66ch;
+}
+
+/* ---------- headings ---------- */
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--ink);
+}
+
+.prose h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.6vw, 30px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-top: 2.6em;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.prose h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-top: 2.1em;
+}
+
+.prose h4 {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--plasma);
+  margin-top: 1.9em;
+}
+
+/* Anchor targets must clear the fixed nav. */
+.prose :is(h1, h2, h3, h4)[id] {
+  scroll-margin-top: 92px;
+}
+
+.prose :global(.heading-anchor) {
+  opacity: 0;
+  margin-left: 0.5em;
+  color: var(--plasma);
+  font-family: var(--mono);
+  font-weight: 400;
+  text-decoration: none;
+  transition: 0.18s;
+}
+
+.prose h2:hover :global(.heading-anchor),
+.prose h3:hover :global(.heading-anchor),
+.prose :global(.heading-anchor):focus-visible {
+  opacity: 1;
+}
+
+/* ---------- inline ---------- */
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* House rule: <em> is a plasma highlight, never italic. */
+.prose em {
+  font-style: normal;
+  color: var(--plasma);
+}
+
+.prose a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--plasma);
+  transition: 0.18s;
+}
+
+.prose a:hover {
+  color: var(--plasma);
+}
+
+.prose h2 a,
+.prose h3 a,
+.prose h4 a {
+  border-bottom: 0;
+}
+
+/* ---------- lists ---------- */
+
+.prose ul,
+.prose ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.prose li + li {
+  margin-top: 0.5em;
+}
+
+/* Square marker — the system has no rounded shapes. */
+.prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  background: var(--plasma);
+}
+
+.prose ol {
+  counter-reset: prose-item;
+}
+
+.prose ol > li::before {
+  counter-increment: prose-item;
+  content: counter(prose-item, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.28em;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+}
+
+/* Nested lists restart cleanly. */
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.5em;
+}
+
+/* ---------- blocks ---------- */
+
+.prose blockquote {
+  border-left: 2px solid var(--plasma);
+  padding-left: 22px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.42;
+  color: var(--ink);
+  font-style: normal;
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 48px 0;
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+}
+
+/* ---------- tables ---------- */
+
+/* Wide tables scroll inside their own box rather than the page. */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--plasma);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.prose td {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 10px 14px;
+  color: var(--ink-2);
+}
+
+/* ---------- code ---------- */
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 2px 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+/* rehype-pretty-code wraps each block in a <figure>; keepBackground:false
+   hands the surface treatment to us. */
+.prose figure[data-rehype-pretty-code-figure] {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.prose figure[data-rehype-pretty-code-figure] figcaption {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.prose pre {
+  margin: 0;
+  padding: 20px 22px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  background: var(--surface);
+}
+
+/* Inside a highlighted block the per-token colours come from the theme, so the
+   inline-code chrome has to be undone. */
+.prose pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+}
+
+/* Language badge — pure CSS, no JS. */
+.prose pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--plasma);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* Scoped to `pre` on purpose: rehype-pretty-code also wraps *inline* code in
+   `[data-line]`, and an unscoped `display: block` there would break every
+   inline snippet onto its own line mid-sentence. */
+.prose pre :global([data-line]) {
+  display: block;
+}
+
+.prose pre :global([data-highlighted-line]) {
+  background: rgba(124, 46, 140, 0.07);
+  box-shadow: inset 2px 0 var(--plasma);
+}
+
+.prose pre :global([data-highlighted-chars]) {
+  background: rgba(185, 102, 15, 0.14);
+}
+
+/* Line numbers, enabled per-block with ```ts showLineNumbers */
+.prose pre :global(code[data-line-numbers]) {
+  counter-reset: line;
+}
+
+.prose pre :global(code[data-line-numbers]) > :global([data-line])::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.6rem;
+  margin-right: 1.2rem;
+  text-align: right;
+  color: var(--ink-3);
+}
+
+@media (max-width: 720px) {
+  .prose {
+    font-size: 16px;
+  }
+
+  .prose pre {
+    padding: 16px 14px;
+    font-size: 12.5px;
+  }
+}

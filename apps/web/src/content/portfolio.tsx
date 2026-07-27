@@ -10,16 +10,24 @@ export interface NavLinkData {
   href: string;
 }
 
+/* Hashes are root-relative so they also work from /blog/*, where a bare
+   `#builds` would resolve against the blog URL and go nowhere. On the homepage
+   itself `/#builds` is still a same-document fragment jump, so nothing reloads. */
 export const navLinks: NavLinkData[] = [
-  { label: 'Builds', href: '#builds' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Path', href: '#path' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Research', href: '#research' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Builds', href: '/#builds' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'Path', href: '/#path' },
+  { label: 'Stack', href: '/#stack' },
+  { label: 'Research', href: '/#research' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
-export const resumeCta: NavLinkData = { label: 'Résumé ↗', href: '#' };
+/* Single source of truth — used by the nav CTA and the hero button.
+   NOTE: requires apps/web/public/jai-shukla-resume.pdf to exist. */
+export const resumeHref = '/jai-shukla-resume.pdf';
+
+export const resumeCta: NavLinkData = { label: 'Résumé ↗', href: resumeHref };
 
 export const hero = {
   status: 'Founding Engineer @ SlidelyAI · open to hard hardware + software problems',

@@ -22,5 +22,16 @@ export * from './lib/Gallery';
 export * from './lib/Research';
 export * from './lib/Contact';
 
+// Blog
+export * from './lib/Prose';
+export * from './lib/PostCard';
+export * from './lib/PostList';
+export * from './lib/TagFilter';
+export * from './lib/TableOfContents';
+export * from './lib/AuthorCard';
+export * from './lib/NewsletterCard';
+export * from './lib/Callout';
+export * from './lib/Figure';
+
 // Utilities
 export * from './lib/Reveal';

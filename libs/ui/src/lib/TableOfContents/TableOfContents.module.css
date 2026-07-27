@@ -1,0 +1,86 @@
+/* Scroll-spy contents list. The active-entry rule borrows the Timeline's
+   left-rail idiom, rotated into a nav. */
+
+.wrap {
+  padding: 20px 22px;
+}
+
+.heading {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  margin: 0 0 14px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--line);
+}
+
+.link {
+  display: block;
+  padding: 6px 0 6px 14px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-3);
+  transition: 0.18s;
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+.nested {
+  padding-left: 26px;
+  font-size: 12.5px;
+}
+
+.active {
+  color: var(--plasma);
+  border-left-color: var(--plasma);
+}
+
+/* ---------- inline (<details>) variant ---------- */
+
+.inline {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 14px 18px;
+  margin-bottom: 32px;
+}
+
+.summary {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::after {
+  content: '+';
+  float: right;
+  color: var(--plasma);
+}
+
+.inline[open] .summary::after {
+  content: '−';
+}
+
+.inline[open] .summary {
+  margin-bottom: 12px;
+}

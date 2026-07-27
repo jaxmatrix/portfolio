@@ -1,5 +1,5 @@
 import { StatusPill, Button, HeroPortrait } from '@portfolio/ui';
-import { hero } from '../../content/portfolio';
+import { hero, resumeHref } from '../../content/portfolio';
 import styles from './sections.module.css';
 
 export function Hero() {
@@ -16,7 +16,7 @@ export function Hero() {
               <Button variant="primary" href="#builds">
                 See the builds ↓
               </Button>
-              <Button href="#">Download résumé</Button>
+              <Button href={resumeHref}>Download résumé</Button>
               <Button href="#contact">Get in touch</Button>
             </div>
           </div>

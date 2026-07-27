@@ -1,0 +1,48 @@
+/* Article aside — the Timeline's left-rail idiom applied to a block. */
+
+.callout {
+  border-left: 2px solid var(--plasma);
+  background: var(--surface);
+  padding: 16px 20px;
+}
+
+.title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--plasma);
+  margin: 0 0 6px;
+}
+
+.body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* The callout owns its own spacing, so prose flow margins are neutralised. */
+.body > :first-child {
+  margin-top: 0;
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+.warn {
+  border-left-color: var(--amber);
+}
+
+.warn .title {
+  color: var(--amber);
+}
+
+.spec {
+  border-left-color: var(--ink);
+}
+
+.spec .title {
+  color: var(--ink);
+}

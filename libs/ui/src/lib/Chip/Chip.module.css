@@ -7,3 +7,14 @@
   color: var(--ink-2);
   background: var(--paper);
 }
+
+/* Only applied when the chip carries an href. */
+.link {
+  display: inline-block;
+  transition: 0.18s;
+}
+
+.link:hover {
+  color: var(--ink);
+  border-color: var(--plasma);
+}

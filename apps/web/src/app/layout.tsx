@@ -2,10 +2,20 @@ import './global.css';
 import { Nav, ProgressRail } from '@portfolio/ui';
 import { Contact } from '../components/sections';
 import { navLinks, resumeCta } from '../content/portfolio';
+import { blog, siteUrl } from '../lib/site';
 import styles from '../components/sections/sections.module.css';
 
 export const metadata = {
-  title: 'Jai Shukla — Builder · Hardware ↔ Software',
+  /* Required so the blog's relative canonical and OG image URLs resolve to
+     absolute ones. */
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Jai Shukla — Builder · Hardware ↔ Software',
+    template: '%s — Jai Shukla',
+  },
+  alternates: {
+    types: { 'application/rss+xml': blog.feedPath },
+  },
   description:
     'Jai Shukla builds the whole stack — precision machines, embedded firmware, full-stack software, and AI systems.',
   icons: {
@@ -72,6 +82,7 @@ export default function RootLayout({
               JAI<span>/</span>SHUKLA
             </span>
           }
+          brandHref="/"
           links={navLinks}
           cta={resumeCta}
         />
