@@ -39,6 +39,14 @@ export const hero = {
       <b>Based in</b> Bengaluru, India · <b>willing to relocate</b>
     </>
   ),
+  portrait: {
+    src: '/self.png',
+    srcWebp: '/self.webp',
+    alt: 'Jai Shukla',
+    // Intrinsic size of /self.png — keep in sync if the asset is regenerated.
+    width: 900,
+    height: 900,
+  },
 };
 
 export const thesis = {

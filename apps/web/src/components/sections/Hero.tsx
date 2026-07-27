@@ -1,4 +1,4 @@
-import { StatusPill, Button, HeroArt } from '@portfolio/ui';
+import { StatusPill, Button, HeroPortrait } from '@portfolio/ui';
 import { hero } from '../../content/portfolio';
 import styles from './sections.module.css';
 
@@ -21,7 +21,7 @@ export function Hero() {
             </div>
           </div>
           <div className={styles.heroArtCol}>
-            <HeroArt />
+            <HeroPortrait {...hero.portrait} />
           </div>
         </div>
       </div>
