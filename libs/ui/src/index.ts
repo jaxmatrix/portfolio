@@ -13,6 +13,7 @@ export * from './lib/ProgressRail';
 
 // Composites & sections
 export * from './lib/HeroArt';
+export * from './lib/HeroPortrait';
 export * from './lib/BuildCard';
 export * from './lib/Pillars';
 export * from './lib/Timeline';
