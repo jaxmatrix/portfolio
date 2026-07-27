@@ -8,7 +8,14 @@ export const metadata = {
   title: 'Jai Shukla — Builder · Hardware ↔ Software',
   description:
     'Jai Shukla builds the whole stack — precision machines, embedded firmware, full-stack software, and AI systems.',
-  icons: { icon: '/logo.svg', shortcut: '/logo.svg', apple: '/logo.svg' },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '48x48' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
