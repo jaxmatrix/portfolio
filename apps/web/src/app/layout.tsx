@@ -37,13 +37,31 @@ export default function RootLayout({
                 color: 'var(--ink)',
               }}
             >
-              <img
-                src="/logo.svg"
-                alt=""
-                width={26}
-                height={26}
-                style={{ display: 'block' }}
-              />
+              {/* Slot is the SVG's document rect (26px tall); the artwork is
+                  taller than the page, so it bleeds out of the header below. */}
+              <span
+                style={{
+                  position: 'relative',
+                  display: 'block',
+                  flex: 'none',
+                  width: 48.67,
+                  height: 26,
+                }}
+              >
+                <img
+                  src="/logo.svg"
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </span>
               JAI<span>/</span>SHUKLA
             </span>
           }
