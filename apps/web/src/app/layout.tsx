@@ -1,4 +1,6 @@
 import './global.css';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Nav, ProgressRail } from '@portfolio/ui';
 import { Contact } from '../components/sections';
 import { navLinks, resumeCta } from '../content/portfolio';
@@ -91,6 +93,8 @@ export default function RootLayout({
           {children}
         </main>
         <Contact />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
