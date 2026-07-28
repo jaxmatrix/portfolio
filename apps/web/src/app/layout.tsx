@@ -10,14 +10,14 @@ export const metadata = {
      absolute ones. */
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Jai Shukla — Builder · Hardware ↔ Software',
+    default: 'Jai Shukla — AI & Systems Engineer',
     template: '%s — Jai Shukla',
   },
   alternates: {
     types: { 'application/rss+xml': blog.feedPath },
   },
   description:
-    'Jai Shukla builds the whole stack — precision machines, embedded firmware, full-stack software, and AI systems.',
+    'Jai Shukla builds the whole stack — agent systems, full-stack products, embedded firmware and the machines underneath.',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },

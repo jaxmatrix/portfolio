@@ -15,10 +15,10 @@ export const siteName = 'Jai Shukla';
 
 export const author = {
   name: 'Jai Shukla',
-  role: 'Founding Engineer @ SlidelyAI',
+  role: 'AI & Systems Engineer',
   email: 'jaishukla7768@gmail.com',
   blurb:
-    'I build the whole stack — precision machines, embedded firmware, full-stack software and AI systems. These are notes from the bench.',
+    'I build the whole stack — agent systems, full-stack products, embedded firmware and the machines underneath. These are the notes.',
   /* Derived from public/isolated_self.png + self_mask.png, cropped square and
      scaled to 240px. Regenerate or replace once the cutout is finalised. */
   avatar: { src: '/blog/author.jpg', alt: 'Jai Shukla' },
@@ -27,7 +27,7 @@ export const author = {
 export const blog = {
   title: 'Blog',
   description:
-    'Notes on hardware, firmware, full-stack software and AI systems — written from the bench.',
+    'Notes on agent systems, full-stack software, firmware and the machines underneath.',
   /** Waypoint continuing the homepage's WP-01…WP-07 scheme. */
   coord: 'WP-08',
   feedPath: '/blog/rss.xml',

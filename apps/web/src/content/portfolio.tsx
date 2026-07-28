@@ -30,19 +30,19 @@ export const resumeHref = '/jai-shukla-resume.pdf';
 export const resumeCta: NavLinkData = { label: 'Résumé ↗', href: resumeHref };
 
 export const hero = {
-  status: 'Founding Engineer @ SlidelyAI · open to hard hardware + software problems',
+  status:
+    'Building an agent OS on a Hermes fork · open to problems that don’t stop at the app layer',
   heading: (
     <>
-      I build the whole stack — from the <em>machine</em> to the <em>model</em>.
+      I build the whole stack — from the <em>model</em> down to the <em>metal</em>.
     </>
   ),
-  sub: 'Jai Shukla. I started at the bench fabricating biosensors, then kept building down and up the stack — firmware, precision machines, full-stack software, AI systems.',
+  sub: 'Jai Shukla. AI and systems engineer — I ship agent systems and the full-stack products around them. When a problem runs deeper than the app, I keep going: browser runtimes, Rust firmware, the machines themselves.',
   meta: (
     <>
-      <b>Origin:</b> Biosensor scientist, 4 yrs &nbsp;→&nbsp; <b>Now:</b> AI &amp; software
-      engineer
+      <b>Now:</b> AI &amp; systems engineer · building an agent OS
       <br />
-      <b>Range:</b> Rust firmware · motion control · React/TS · AWS · agentic AI
+      <b>Depth:</b> agent runtimes · React/TS · Rust · AWS · WebRTC · down to bare metal
       <br />
       <b>Based in</b> Bengaluru, India · <b>willing to relocate</b>
     </>
@@ -63,7 +63,7 @@ export const thesis = {
       Most engineers pick a layer and stay there. <em>I go wherever the problem is.</em>
     </>
   ),
-  body: "If the tool I needed didn't exist, I built it — a potentiostat and its firmware, a 5-axis deposition machine, the control software that drives it, the AI that orchestrates it. The domains changed from electrochemistry to AI products; the instinct never did. Below is the same person solving problems at every level of the stack.",
+  body: 'Right now that’s an agent OS — a fork of Nous’s Hermes, with containerized sessions streamed over WebRTC. Before it: an AI product shipped inside PowerPoint, a query language so agents could traverse Revit geometry, the Rust software driving a 5-axis machine, and a potentiostat with its own firmware, built because the instrument I needed didn’t exist. The domains changed; the instinct didn’t — when the tool isn’t there, build it.',
 };
 
 export interface PillarData {
@@ -72,21 +72,22 @@ export interface PillarData {
   body: ReactNode;
 }
 
+/* Ordered top-down: the numbers count how far down the stack each step goes. */
 export const pillars: PillarData[] = [
   {
-    n: 'LAYER 00 — METAL',
-    title: 'Machine & Firmware',
-    body: 'Designed and built precision machines end-to-end. Rust firmware on RP2040 / ESP32 (embassy-rs), motion control, closed-loop vision, custom instruments.',
+    n: 'DEPTH 00 — MODEL',
+    title: 'Agents & Models',
+    body: 'A hybrid JSONPath–Emmet query language so agents can traverse Revit geometry. A long-context tool that chunks data to stop context pollution. Record-then-replay browser automation instead of re-reasoning every run.',
   },
   {
-    n: 'LAYER 01 — SOFTWARE',
+    n: 'DEPTH 01 — SOFTWARE',
     title: 'Full-stack & Systems',
     body: 'React / TypeScript / Rust across desktop, web, and cloud. Real-time collaboration (Yjs/CRDT), microservices, AWS infra, cross-platform apps.',
   },
   {
-    n: 'LAYER 02 — INTELLIGENCE',
-    title: 'AI & Orchestration',
-    body: 'Agentic workflows, RAG, computer-vision pipelines, context engineering — from independent video agents to secure multi-machine orchestration.',
+    n: 'DEPTH 02 — METAL',
+    title: 'Machine & Firmware',
+    body: 'Designed and built precision machines end-to-end. Rust firmware on RP2040 / ESP32 (embassy-rs), motion control, closed-loop vision, custom instruments.',
   },
 ];
 
@@ -378,7 +379,17 @@ export interface TimelineData {
 
 export const timeline: TimelineData[] = [
   {
-    when: 'FEB 2025 — PRESENT',
+    when: 'JUL 2026 — PRESENT',
+    role: 'Independent',
+    org: (
+      <>
+        <b>mjx-hermes-agent</b> · an agent OS on a Hermes fork
+      </>
+    ),
+    desc: 'Cross-platform client on a fork of Nous Research’s Hermes: containerized sessions streamed over WebRTC, and browser work recorded once and replayed deterministically.',
+  },
+  {
+    when: 'FEB 2025 — JUN 2026',
     role: 'Founding Engineer',
     org: (
       <>
@@ -444,19 +455,14 @@ export interface CapabilityData {
   items: string[];
 }
 
+/* Ordered top-down, matching the pillars: model first, bare metal last. */
 export const capabilities: CapabilityData[] = [
   { title: 'Languages', items: ['Rust', 'TypeScript', 'Python', 'C', 'C# / VB (.NET)'] },
+  /* Tools with a repo or a version number — not categories. "Agentic workflows",
+     "RAG" and "context engineering" were cut for reading as buzzwords. */
   {
-    title: 'Hardware & Firmware',
-    items: [
-      'embassy-rs',
-      'esp-idf-rs',
-      'RP2040 / ESP32',
-      'Marlin / motion',
-      'OpenCV',
-      'Potentiostat design',
-      'Sputtering / DLP',
-    ],
+    title: 'Models & Agents',
+    items: ['Hermes', 'LangGraph', 'Qdrant', 'Browser automation'],
   },
   {
     title: 'Frontend & Apps',
@@ -470,6 +476,7 @@ export const capabilities: CapabilityData[] = [
       'Actix',
       'Hono',
       'WebSockets',
+      'WebRTC',
       'Yjs',
       'Socket.io',
       'PostgreSQL',
@@ -480,14 +487,15 @@ export const capabilities: CapabilityData[] = [
     items: ['AWS', 'GCP', 'Azure', 'Docker', 'Kubernetes', 'CI/CD', 'Graph API'],
   },
   {
-    title: 'AI & Agents',
+    title: 'Hardware & Firmware',
     items: [
-      'Agentic workflows',
-      'RAG',
-      'LangGraph',
-      'Qdrant',
-      'Context engineering',
-      'Computer vision',
+      'embassy-rs',
+      'esp-idf-rs',
+      'RP2040 / ESP32',
+      'Marlin / motion',
+      'OpenCV',
+      'Potentiostat design',
+      'Sputtering / DLP',
     ],
   },
 ];
@@ -588,7 +596,7 @@ export const contact = {
       Got something hard <em>to build?</em>
     </>
   ),
-  sub: "I'm most useful where hardware meets software and nobody's sure it can be done. Based in Bengaluru and happy to relocate.",
-  footLeft: 'JAI SHUKLA · BUILDER · HARDWARE ↔ SOFTWARE',
-  footRight: 'MACHINE → FIRMWARE → SOFTWARE → MODEL',
+  sub: "I'm most useful on problems that cross layers — where the answer isn't in the app, and nobody's sure it can be done. Based in Bengaluru and happy to relocate.",
+  footLeft: 'JAI SHUKLA · AI & SYSTEMS ENGINEER',
+  footRight: 'MODEL → SOFTWARE → FIRMWARE → MACHINE',
 };

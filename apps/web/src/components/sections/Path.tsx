@@ -3,7 +3,7 @@ import { timeline } from '../../content/portfolio';
 
 export function Path() {
   return (
-    <Section id="path" coord="WP-04" title="The path" note="bench → firmware → software → AI">
+    <Section id="path" coord="WP-04" title="The path">
       <Reveal>
         <Timeline>
           {timeline.map((entry) => (
