@@ -4,13 +4,9 @@ import styles from './sections.module.css';
 
 export function Builds() {
   return (
-    <Section
-      id="builds"
-      coord="WP-02"
-      title="Featured builds"
-      note=""
-    >
-      {builds.map((build, i) => (
+    <Section id="builds" coord="WP-02" title="Featured builds">
+      {/* Content is authored oldest-first; the page leads with the newest build. */}
+      {[...builds].reverse().map((build, i) => (
         <Reveal key={build.title} className={styles.buildItem}>
           <BuildCard
             tag={build.tag}
@@ -19,8 +15,8 @@ export function Builds() {
             role={build.role}
             paragraphs={build.paragraphs}
             chips={build.chips}
-            mediaLabel={build.mediaLabel}
-            mediaHint={build.mediaHint}
+            links={build.links}
+            media={<img src={build.image} alt={build.imageAlt} loading="lazy" />}
             reverse={i % 2 === 1}
           />
         </Reveal>

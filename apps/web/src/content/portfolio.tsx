@@ -90,6 +90,12 @@ export const pillars: PillarData[] = [
   },
 ];
 
+export interface BuildLinkData {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
 export interface BuildData {
   tag: string;
   year: string;
@@ -97,8 +103,11 @@ export interface BuildData {
   role: string;
   paragraphs: ReactNode[];
   chips: string[];
-  mediaLabel: string;
-  mediaHint: string;
+  /** Repo / demo destinations; rendered under the chip row. */
+  links?: BuildLinkData[];
+  /** Derived by tools/prepare-images.sh into public/builds/. */
+  image: string;
+  imageAlt: string;
 }
 
 export const builds: BuildData[] = [
@@ -117,8 +126,9 @@ export const builds: BuildData[] = [
       </span>,
     ],
     chips: ['Marlin', 'Motion control', 'Stepper drives', 'OpenCV', 'Mechanical design'],
-    mediaLabel: '5-axis deposition machine — live run',
-    mediaHint: 'CLIP 01 · motion + toolpath + deposition',
+    image: '/builds/deposition-machine.webp',
+    imageAlt:
+      'The 5-axis deposition machine on the bench: extruded aluminium frame, stepper motors, lead screws and the deposition head',
   },
   {
     tag: 'Embedded Rust',
@@ -134,8 +144,9 @@ export const builds: BuildData[] = [
       </span>,
     ],
     chips: ['Rust', 'embassy-rs', 'esp-idf-rs', 'RP2040 / ESP32', 'Analog / ADC'],
-    mediaLabel: 'Potentiostat firmware — a CV / EIS sweep running',
-    mediaHint: 'CLIP 02 · RP2040 · embassy-rs · live measurement',
+    image: '/builds/potentiostat.webp',
+    imageAlt:
+      'Potentiostat bring-up: a Raspberry Pi Pico W wired across two breadboards to a row of op-amps forming the analog front end',
   },
   {
     tag: 'Rust desktop + tooling',
@@ -155,8 +166,9 @@ export const builds: BuildData[] = [
       </span>,
     ],
     chips: ['Rust', 'egui', 'Tauri', 'State machines', 'Path planning'],
-    mediaLabel: 'Rust control app + SVG→toolpath generation',
-    mediaHint: 'CLIP 03 · egui · state machine · path planning',
+    image: '/builds/control-software.webp',
+    imageAlt:
+      'The control software mid-run: jog controls down the left, QC and pipette camera feeds watching the head over a sensor board',
   },
   {
     tag: 'Fabrication & process',
@@ -182,13 +194,14 @@ export const builds: BuildData[] = [
       'Thin films',
       'ML (SVM/NN/RF)',
     ],
-    mediaLabel: 'Biosensor fabrication + how the potentiostat works',
-    mediaHint: 'CLIP 04 · NPTEL explainer · lab I set up',
+    image: '/builds/biosensors.webp',
+    imageAlt:
+      'A multiplexed sensor held between two fingers: seven screen-printed electrodes radiating from a centre well on Kapton, with an SLA-printed chamber bonded over it',
   },
   {
     tag: 'AI systems',
     year: 'Project · 2026–present',
-    title: 'Architectural Intelligence over Autodesk Revit',
+    title: 'Dexkitty — an AI layer over Autodesk Revit',
     role: 'systems architecture · agents · CAD integration',
     paragraphs: [
       <>
@@ -203,19 +216,19 @@ export const builds: BuildData[] = [
       </span>,
     ],
     chips: ['TypeScript', 'Yjs / CRDT', 'WebSockets', 'Qdrant', 'Revit / BIM', 'Agents'],
-    mediaLabel: 'Real-time collaborative AI over Revit',
-    mediaHint: 'CLIP 05 · Yjs/CRDT · multi-agent · custom query lang',
+    image: '/builds/dexkitty.webp',
+    imageAlt: 'The Dexkitty landing page — “The AI layer for design intelligence”',
   },
   {
     tag: 'Product · founding engineer',
-    year: 'SlidelyAI (YC) · 2025–present',
+    year: 'SlidelyAI (YC) · 2025–26',
     title: 'Shipping an AI product across desktop, web & cloud',
     role: 'Windows add-in · web app · AI orchestration · infra',
     paragraphs: [
       <>
-        Own the Windows software, the web app, the AI orchestration layer and the cloud infra.
-        Unlocked web-app integration <b className="hard">inside PowerPoint</b> and ported legacy
-        Windows add-ins to macOS with full parity.
+        Owned the Windows software, the web app, the AI orchestration layer and the cloud
+        infra. Unlocked web-app integration <b className="hard">inside PowerPoint</b> and ported
+        legacy Windows add-ins to macOS with full parity.
       </>,
       <span className="hard" key="h">
         Engineered a <b>high-fidelity graphics-tracing pipeline</b> (generative AI + computer
@@ -231,8 +244,41 @@ export const builds: BuildData[] = [
       'Computer vision',
       'Microservices',
     ],
-    mediaLabel: 'AI slides, native inside PowerPoint',
-    mediaHint: 'CLIP 06 · graphics tracing · cross-platform',
+    image: '/builds/slidely.webp',
+    imageAlt:
+      'The Slidely AI product page — “Create & improve complex, fully editable PowerPoint presentations”, with generated decks alongside',
+  },
+  /* Newest build. The array is authored oldest-first and `Builds.tsx` reverses it,
+     so appending here is what puts this card at the top of the section. */
+  {
+    tag: 'Agent runtime',
+    year: 'Independent · 2026–present',
+    title: 'mjx-hermes-agent — an unofficial client on Nous’s Hermes',
+    role: 'fork · runtime · session streaming · browser automation',
+    paragraphs: [
+      <>
+        A fork of Nous Research’s Hermes, rebuilt as an unofficial client that carries the same
+        session across Linux, macOS and Windows — an <b className="hard">agent OS</b> that
+        drives whichever machine is in front of me, not just the terminal it started in.
+      </>,
+      <span className="hard" key="h">
+        The hard part: <b>getting a real desktop out of a container</b>. The containerized
+        session streams over WebRTC so a remote machine is driveable at frame rate, and browser
+        work is <b>recorded once and replayed deterministically</b> instead of re-reasoning the
+        same clicks on every run.
+      </span>,
+    ],
+    chips: ['WebRTC', 'Containers', 'Browser automation', 'Cross-platform', 'Agents'],
+    links: [
+      {
+        label: 'github.com/jaxmatrix/mjx-hermes-agent ↗',
+        href: 'https://github.com/jaxmatrix/mjx-hermes-agent',
+        external: true,
+      },
+    ],
+    image: '/builds/mjx-hermes.webp',
+    imageAlt:
+      'Two mjx-hermes-agent client windows side by side — session list, capabilities, artifacts and cron jobs in the sidebar',
   },
 ];
 
