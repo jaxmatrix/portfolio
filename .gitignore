@@ -53,3 +53,13 @@ out
 vite.config.*.timestamp*
 
 storybook-static
+
+# Raw photo/video library (~1.3 GB, mostly 4000x3000 stills and multi-hundred-MB
+# clips). Source material only — tools/prepare-images.sh derives the web-sized
+# copies that actually ship, into apps/web/public/.
+apps/web/assets/Raw/
+
+# Scratch dir for the headless-Chromium capture in tools/prepare-images.sh.
+tmp-shot/
+
+*.tsbuildinfo
