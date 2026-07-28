@@ -20,6 +20,7 @@ export const navLinks: NavLinkData[] = [
   { label: 'Stack', href: '/#stack' },
   { label: 'Research', href: '/#research' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Scrapbook', href: '/scrapbook' },
   { label: 'Contact', href: '/#contact' },
 ];
 
@@ -367,6 +368,53 @@ export const gallery: GalleryData[] = [
     src: '/gallery/home-lab.webp',
     caption:
       'The hostel-room lab at IIT Kharagpur: one printer, a growth chart on the whiteboard, and most of a Master’s worth of side projects.',
+  },
+];
+
+export interface ScrapbookData {
+  src: string;
+  caption: string;
+}
+
+/* Things that aren't work. Surfaced at /scrapbook, not on the homepage. */
+export const scrapbook: ScrapbookData[] = [
+  {
+    src: '/scrapbook/hdd-serial-console.webp',
+    caption:
+      'A bricked Seagate ST3160318AS wired to a USB-TTL adapter — talking to the drive’s diagnostic serial port to bring it back. Labelled 1337MB, naturally.',
+  },
+  {
+    src: '/scrapbook/relay-loop.webp',
+    caption:
+      'A state machine with the transitions wrong put a relay into a loop, switching fast enough to be audible. For about a minute the circuit was a drum machine.',
+  },
+  {
+    src: '/scrapbook/paper-costume.webp',
+    caption: 'An Assassin’s Creed costume, built entirely out of paper.',
+  },
+  {
+    src: '/scrapbook/garbage-design-build.webp',
+    caption: 'Building a scenic model out of discarded material for a garbage-design contest.',
+  },
+  {
+    src: '/scrapbook/garbage-design-award.webp',
+    caption: 'It came second.',
+  },
+  {
+    src: '/scrapbook/3d-pen-keychain.webp',
+    caption: 'A keychain drawn freehand with a 3D pen.',
+  },
+  {
+    src: '/scrapbook/printed-self-portrait.webp',
+    caption: 'A self portrait, 3D printed.',
+  },
+  {
+    src: '/scrapbook/peltier-rig.webp',
+    caption: 'A rig built to characterise Peltier plates, because the datasheet was not enough.',
+  },
+  {
+    src: '/scrapbook/gsoc-kanban.webp',
+    caption: 'The last day of Google Summer of Code, clearing the final column of the kanban.',
   },
 ];
 

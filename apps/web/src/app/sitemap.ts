@@ -13,6 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${siteUrl}/scrapbook`,
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
       url: `${siteUrl}/blog`,
       ...(newest ? { lastModified: new Date(`${newest}T00:00:00Z`) } : {}),
       changeFrequency: 'weekly',
