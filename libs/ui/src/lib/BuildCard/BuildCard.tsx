@@ -3,6 +3,12 @@ import { Tag } from '../Tag';
 import { Chip } from '../Chip';
 import styles from './BuildCard.module.css';
 
+export interface BuildLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
 export interface BuildCardProps {
   /** Category label, e.g. "Precision machine". */
   tag: ReactNode;
@@ -14,6 +20,8 @@ export interface BuildCardProps {
   /** Body paragraphs; wrap emphasis in `<span className="hard">…<b/></span>`. */
   paragraphs: ReactNode[];
   chips: string[];
+  /** Repo / demo destinations, rendered as their own row under the chips. */
+  links?: BuildLink[];
   /** Custom media (a `<video>` / `<iframe>`); falls back to the play-button slot. */
   media?: ReactNode;
   mediaLabel?: ReactNode;
@@ -39,6 +47,7 @@ export function BuildCard({
   role,
   paragraphs,
   chips,
+  links,
   media,
   mediaLabel,
   mediaHint,
@@ -81,6 +90,15 @@ export function BuildCard({
             <Chip key={chip}>{chip}</Chip>
           ))}
         </div>
+        {links?.length ? (
+          <div className={styles.links}>
+            {links.map((link) => (
+              <Chip key={link.href} href={link.href} external={link.external}>
+                {link.label}
+              </Chip>
+            ))}
+          </div>
+        ) : null}
       </div>
     </article>
   );

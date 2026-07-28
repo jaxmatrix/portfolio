@@ -34,6 +34,27 @@ export const DepositionMachine: Story = {
   },
 };
 
+/** With a repo destination under the chip row. */
+export const WithLinks: Story = {
+  args: {
+    ...DepositionMachine.args,
+    tag: 'Agent runtime',
+    year: 'Independent · 2026–present',
+    title: 'mjx-hermes-agent — an unofficial client on Nous’s Hermes',
+    role: 'fork · runtime · session streaming · browser automation',
+    chips: ['WebRTC', 'Containers', 'Browser automation', 'Cross-platform', 'Agents'],
+    links: [
+      {
+        label: 'github.com/jaxmatrix/mjx-hermes-agent ↗',
+        href: 'https://github.com/jaxmatrix/mjx-hermes-agent',
+        external: true,
+      },
+    ],
+    mediaLabel: 'Remote session, streamed and driven',
+    mediaHint: 'CLIP 07 · WebRTC · replayed browser run',
+  },
+};
+
 /** Even-index layout: media swaps to the right. */
 export const Reversed: Story = {
   args: {
