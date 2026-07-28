@@ -284,19 +284,89 @@ export const builds: BuildData[] = [
 
 export interface GalleryData {
   src?: string;
-  tall?: boolean;
   caption: string;
 }
 
+/* Engineering work only — personal builds live on /scrapbook. Images are
+   derived into public/gallery/ by tools/prepare-images.sh. */
 export const gallery: GalleryData[] = [
-  { tall: true, caption: '5-axis deposition machine — the full rig I designed and built' },
-  { caption: 'Deposition head — tuned to land material on a 100µm spot' },
-  { caption: 'Custom potentiostat board (RP2040) running embassy-rs firmware' },
-  { tall: true, caption: 'RF/DC sputtering chamber — rebuilt from a full teardown' },
-  { caption: 'Multiplexed sensor array, DLP-patterned at 50µm' },
-  { caption: 'Rust (egui) control software driving the machine' },
-  { tall: true, caption: 'The measurement station I set up at the Nanobiosensor Lab' },
-  { caption: 'SVG toolpath → generated process, on screen' },
+  {
+    src: '/gallery/deposition-rig.webp',
+    caption:
+      'The 5-axis deposition rig, first full assembly — extruded frame, lead screws, and the head that had to land material on a 100µm spot.',
+  },
+  {
+    src: '/gallery/deposition-enclosed.webp',
+    caption:
+      'The same machine a revision later: enclosed, with a microscope on the head and a hygrometer inside the cabinet.',
+  },
+  {
+    src: '/gallery/deposition-humidity.webp',
+    caption:
+      'Humidity control added after runs started drifting with the weather. A dehumidifier in the enclosure held it near 40%.',
+  },
+  {
+    src: '/gallery/sputtering-chamber.webp',
+    caption:
+      'The RF/DC sputtering chamber — stainless bell, viewport, turbo and gas lines. It arrived dead; this is before the teardown.',
+  },
+  {
+    src: '/gallery/sputtering-controller.webp',
+    caption:
+      'Turbo controller alive again and the rotary pump running, after rebuilding the vacuum system and writing its operating protocol.',
+  },
+  {
+    src: '/gallery/sputtering-copper.webp',
+    caption: 'First copper laid down once the chamber held vacuum again.',
+  },
+  {
+    src: '/gallery/potentiostat-v4.webp',
+    caption:
+      'Potentiostat v4 — a Pico W talking to a row of op-amps, running the embassy-rs firmware that does CV, DPV, CA and EIS.',
+  },
+  {
+    src: '/gallery/potentiostat-v2.webp',
+    caption:
+      'v2, built on hand-annotated cardboard: relay-switched electrodes, a level shifter, and an Android app plotting the sweep over Bluetooth.',
+  },
+  {
+    src: '/gallery/potentiostat-v1.webp',
+    caption: 'v1. Where the instrument started before any of it worked.',
+  },
+  {
+    src: '/gallery/rust-display-driver.webp',
+    caption:
+      'Writing an ILI9225 SPI display driver in Rust for the Pico — source on the monitor, the display itself wired up on the desk.',
+  },
+  {
+    src: '/gallery/electrodes-18.webp',
+    caption:
+      'Eighteen electrodes fanned out across a chip the size of a fingertip, etched down to 50µm traces.',
+  },
+  {
+    src: '/gallery/screen-printed-cells.webp',
+    caption:
+      'Eight three-electrode cells screen-printed onto Kapton in one pass — my own fabrication process, no cleanroom involved.',
+  },
+  {
+    src: '/gallery/microfluidics.webp',
+    caption:
+      'SLA-printed microfluidic cells with electrodes bonded in, for flow measurements on live cell culture.',
+  },
+  {
+    src: '/gallery/patch-sensor-mask.webp',
+    caption: 'The first mask for the wearable patch sensor, cut and aligned by hand.',
+  },
+  {
+    src: '/gallery/clothes-peg-connector.webp',
+    caption:
+      'No FPC adapter anywhere in the building, so a clothes peg became the connector — jaws clamp the flex cable, wires soldered onto the contacts.',
+  },
+  {
+    src: '/gallery/home-lab.webp',
+    caption:
+      'The hostel-room lab at IIT Kharagpur: one printer, a growth chart on the whiteboard, and most of a Master’s worth of side projects.',
+  },
 ];
 
 export interface TimelineData {
