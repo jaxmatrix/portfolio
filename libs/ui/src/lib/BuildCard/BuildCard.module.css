@@ -88,7 +88,8 @@
 }
 
 .media :global(iframe),
-.media :global(video) {
+.media :global(video),
+.media :global(img) {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -103,6 +104,9 @@
   height: 12px;
   border: 1px solid var(--plasma);
   opacity: 0.6;
+  /* Media fills the slot absolutely, so the brackets need lifting above it or
+     they vanish behind every card that has a real image. */
+  z-index: 1;
 }
 
 .tl {
