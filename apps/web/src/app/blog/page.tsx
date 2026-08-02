@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Button, PostCard, PostList, PostRow, Section } from '@portfolio/ui';
+import { Button, PostList, PostRow, Section } from '@portfolio/ui';
 import { PostSidebar } from '../../components/blog/PostSidebar';
 import { getAllPosts, tagToSlug } from '../../lib/blog';
 import { author, blog } from '../../lib/site';
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();
-  const [featured, ...rest] = posts;
+  // const [featured, ...rest] = posts;
 
   const tagLinks = (tags: string[]) =>
     tags.map((tag) => ({ label: tag, href: `/blog/tag/${tagToSlug(tag)}` }));
