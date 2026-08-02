@@ -217,6 +217,20 @@
   color: var(--line);
 }
 
+/* Sits in the .postMeta row, so it inherits the mono/12px dateline styling and
+   picks up the `·` separator from the sibling rule above. */
+.repoLink {
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.repoLink:hover {
+  color: var(--plasma);
+  border-bottom-color: var(--plasma);
+}
+
 .postTags {
   display: flex;
   flex-wrap: wrap;

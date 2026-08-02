@@ -12,6 +12,15 @@ import styles from '../blog.module.css';
 /* Only real posts are routable; anything else 404s without hitting the fs. */
 export const dynamicParams = false;
 
+/** `https://github.com/jaxmatrix/mjx-md-voiceover` → `jaxmatrix/mjx-md-voiceover`. */
+function repoLabel(url: string): string {
+  try {
+    return new URL(url).pathname.replace(/^\/+|\/+$/g, '') || url;
+  } catch {
+    return url;
+  }
+}
+
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
@@ -93,6 +102,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               {metaParts.map((part) => (
                 <span key={part}>{part}</span>
               ))}
+              {meta.repo && (
+                <a
+                  className={styles.repoLink}
+                  href={meta.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {repoLabel(meta.repo)} ↗
+                </a>
+              )}
             </div>
 
             {meta.tags.length > 0 && (

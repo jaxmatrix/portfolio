@@ -32,6 +32,7 @@ export * from './lib/AuthorCard';
 export * from './lib/NewsletterCard';
 export * from './lib/Callout';
 export * from './lib/Figure';
+export * from './lib/VoiceoverDemo';
 
 // Utilities
 export * from './lib/Reveal';

@@ -19,6 +19,7 @@ summary: >-                                     # required — cards, RSS, meta 
 tags: [Firmware, Control]                       # optional; each becomes a /blog/tag/... page
 cover: /blog/my-post/cover.jpg                  # optional, path under public/
 coverAlt: The spindle mount seen from the Z gantry   # required whenever cover is set
+repo: https://github.com/you/project            # optional; linked from the dateline
 updated: 2026-07-26                             # optional
 draft: false                                    # optional; drafts are dev-only
 ---

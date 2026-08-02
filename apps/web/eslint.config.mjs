@@ -9,7 +9,9 @@ export default [
     {
         ignores: [
             ".next/**/*",
-            "**/out-tsc"
+            "**/out-tsc",
+            // wasm-bindgen output, copied in verbatim from the engine's build.
+            "public/wasm/**/*"
         ]
     }
 ];

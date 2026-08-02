@@ -19,6 +19,8 @@ export interface PostFrontmatter {
   cover?: string;
   /** Alt text for the cover image. Required whenever `cover` is set. */
   coverAlt?: string;
+  /** Source repository for the thing the post is about, linked from the dateline. */
+  repo?: string;
   /** Hidden from production builds, still visible in `nx dev web`. */
   draft: boolean;
   /** Optional ISO date of the last substantive edit. */

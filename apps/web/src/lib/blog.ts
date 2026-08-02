@@ -50,7 +50,7 @@ function toIsoDate(value: unknown): string | null {
  * seven fields, and the errors are friendlier.
  */
 function parseFrontmatter(data: Record<string, unknown>, file: string): PostFrontmatter {
-  const { title, summary, tags, cover, coverAlt, draft } = data;
+  const { title, summary, tags, cover, coverAlt, repo, draft } = data;
 
   const date = toIsoDate(data.date);
   const updated = data.updated === undefined ? undefined : toIsoDate(data.updated);
@@ -79,12 +79,16 @@ function parseFrontmatter(data: Record<string, unknown>, file: string): PostFron
   if (cover !== undefined && (typeof coverAlt !== 'string' || coverAlt.trim() === '')) {
     fail(file, '`coverAlt` is required whenever `cover` is set.');
   }
+  if (repo !== undefined && (typeof repo !== 'string' || !repo.startsWith('https://'))) {
+    fail(file, '`repo` must be an https URL, e.g. https://github.com/you/project.');
+  }
   return {
     title,
     date,
     summary,
     tags: (tags ?? []).map((t) => String(t)),
     ...(typeof cover === 'string' ? { cover, coverAlt: coverAlt as string } : {}),
+    ...(typeof repo === 'string' ? { repo } : {}),
     draft: draft === true,
     ...(updated ? { updated } : {}),
   };

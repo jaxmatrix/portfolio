@@ -1,4 +1,4 @@
-import { Callout, Chip, Figure, StatusPill } from '@portfolio/ui';
+import { Callout, Chip, Figure, StatusPill, VoiceoverDemo } from '@portfolio/ui';
 
 /**
  * Components made available to every `.mdx` post without an import.
@@ -13,6 +13,7 @@ export const mdxComponents = {
   Figure,
   Chip,
   StatusPill,
+  VoiceoverDemo,
 };
 
 export default mdxComponents;

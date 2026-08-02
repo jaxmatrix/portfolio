@@ -1,0 +1,249 @@
+---
+title: 'Stop saying "backtick" — a markdown voiceover parser'
+date: 2026-08-02
+summary: >-
+  A Rust engine that rewrites markdown into speech-friendly text before it
+  reaches a TTS voice — "Heading: Objective" instead of "hash hash hash
+  Objective", and 43% less synthesis compute.
+tags: [Rust, WASM, Voice]
+repo: https://github.com/jaxmatrix/mjx-md-voiceover
+updated: 2026-08-02
+draft: false
+---
+
+_"hash hash hash objective of the project. backtick backtick backtick json. dollar dollar
+backslash Cee underscore Aee…"_
+
+That is a text-to-speech engine reading markdown to me. The LaTeX alone went on for more than five
+minutes. I paid for this.
+
+## My ears were paining
+
+Recently I have been building projects that need me coding with AI day in and night out, and my
+eyes were giving out well before my token limits did. The fix seemed obvious: I don't actually need
+a _screen_. If the agents just read out what they had been generating, I could keep working with my
+eyes closed. Speaking to them worked beautifully. Then they spoke back.
+
+Every code block became a solemn announcement of every variable, every semicolon and every
+loop-syntax character. Then came the mermaid diagram. Then the LaTeX that was supposed to be
+showing me cool maths. My brain, tired from working, wanted to seek comfort in the sweetest voice
+AI had to offer, and the whole adventure backfired — instead of my mouth speaking the objective, my
+ears started screaming at me to stop this torture.
+
+Here is the part that turned annoyance into a project though: it wasn't just unpleasant, it was
+_slow_. One code-heavy document that takes about a minute to read with your eyes produced over two
+minutes of audio — most of it punctuation, read one symbol at a time. I had paid for those tokens,
+and I was spending my afternoon hearing the word "backtick". The exact numbers are further down.
+
+## Rules, not inference
+
+In sadness, I went back to reading things myself — except this time I was reading out loud, and
+slowly I started to notice a pattern. _"Okay, the title is this. The sub heading is this. Under
+it there is a list."_ The same handful of phrases, again and again, on every document I picked up. I
+was not really reading the markdown out loud at all. I was parsing it in my head and re-emitting it
+as something I could actually think through.
+
+That repetition is the whole tell. Anything I say identically every single time is not judgement, it
+is a rule — and rules do not need a model sitting behind them. Code was the same story: "declaring
+variable a, initialising with value one", "function f operated on something". Same shape, every
+time. If a transformation repeats, it has a structure; and if it has a structure, I can write a
+parser for it and never pay for inference on it again.
+
+## Same tree, different voice
+
+I had also built this exact shape once before. Rendering markdown on the web works the same way:
+parse the document into an Abstract Syntax Tree, walk the tree, swap each node for the UI element
+that draws it — that is all the remark/rehype pipeline is doing under the hood.
+
+Voice needed nothing more exotic. You just replace each node with a predefined _spoken_ node
+instead of a visual one. Same tree, different output target.
+
+The engine is Rust. `pulldown-cmark` does the CommonMark tokenising, and I fold its event stream
+into my own `VoiceAst` with a stack-based reducer. The AST is zero-copy — nodes borrow `&'a str`
+slices straight out of the input rather than allocating a copy of every word in the document. Then
+a `SpeechFormatter` walks the tree and writes one continuous string.
+
+The whole thing has to be invisible. There is a test asserting that a 50KB document converts in
+under **10 milliseconds**, because the moment this becomes something you wait for, you may as well
+have asked the model to do it.
+
+## The rules
+
+So every node in the tree gets swapped for what a person would actually say in its place — and
+_voilà_, the document starts talking like a human.
+
+The rules are boring on purpose. Boring is the entire product:
+
+| You wrote             | A TTS engine reads                          | md-voiceover says       |
+| :-------------------- | :------------------------------------------ | :---------------------- |
+| `# Title`             | "hash Title"                                | `Heading: Title.`       |
+| `## Install`          | "hash hash Install"                         | `Section: Install.`     |
+| `**bold**`            | "asterisk asterisk bold…"                   | `bold`                  |
+| `1. First item`       | "one period First item"                     | `First, First item.`    |
+| `- Item`              | "dash Item"                                 | `Item.`                 |
+| `` `run()` ``         | "backtick run backtick"                     | `run()`                 |
+| `[Google](https://…)` | "left bracket Google right bracket…"        | `Google`                |
+| `> Wise words.`       | "greater than Wise words"                   | `Quote: Wise words.`    |
+| ` ```rust `           | the entire function, character by character | `Code snippet in Rust.` |
+
+That last row is the one that saves your afternoon. You almost never want a code block read aloud —
+you want to be _told there is one_, and to go look at it later with your eyes.
+
+Punctuation is doing quiet work here too. TTS models use full stops and commas to decide where to
+pause and how to modulate pitch, so the formatter injects real sentence-ending punctuation instead
+of leaving a run-on wall of words. The `First,` and `Second,` on list items exist for the same
+reason — they give your ear a handle to hang the structure on.
+
+## Plugins
+
+The core rules are the easy half. The interesting half is everything markdown grew _after_
+CommonMark, which is what the plugin system is for. Anything can register itself against a node type
+and claim it:
+
+```rust
+pub trait VoicePlugin: Send + Sync {
+    fn name(&self) -> &'static str;
+    fn supports_node<'a>(&self, node: &VoiceAstNode<'a>) -> bool;
+    fn transform<'a>(
+        &self,
+        node: &VoiceAstNode<'a>,
+        context: &mut TransformContext,
+    ) -> Option<SpeechToken<'a>>;
+}
+```
+
+Five of those ship today, each as its own crate:
+
+- **code** — names the language instead of reading the body. `Code snippet in Rust.`, `Shell command script snippet.`, `SQL Schema Definition.`
+- **latex** — the one my ears wanted most. `$a^2 + b^2 = c^2$` becomes _"a squared plus b squared equals c squared"_, and it rewrites only the maths, so a `$5` price tag in a sentence survives as a price tag.
+- **mermaid** — you cannot usefully listen to a diagram, so it announces the shape instead. `Sequence flow diagram illustration.`, `Entity relationship schema diagram.`
+- **admonition** — GFM callouts. `> [!WARNING]` becomes _"Warning alert callout."_ rather than _"greater than left bracket exclamation mark WARNING right bracket"_.
+- **table** — still the hard one, and honestly still bad. Reading a table aloud is a genuinely unsolved interface problem, and "Structured data table." is a placeholder, not an answer.
+
+## What's next
+
+In rough order of how much it bothers me:
+
+**Pacing that knows how deep it is.** Right now a nested list restarts at "First" at every level, so
+a three-deep outline sounds like the same list three times over. The `TransformContext` should carry
+the depth and say "sub-item A" once it has gone down a level.
+
+**O(1) plugin dispatch.** The registry currently does a linear first-match-wins scan across every
+registered plugin, for every node. Completely fine at five plugins, completely stupid at fifty.
+Indexing them by the AST node discriminant fixes it.
+
+**SIMD scanning.** `memchr` for the newline and delimiter scanning during tokenisation, because the
+sub-millisecond budget is the feature and I would like to keep it as documents grow.
+
+**And the packages.** This is the part I actually want out of the door. The engine already compiles
+to two places it can be called from:
+
+- a **WebAssembly** build through `wasm-bindgen`, so a frontend can convert markdown to speech text
+  in the browser with no server round trip — that is exactly what is running further down this page
+- a **Python** wheel through PyO3 and maturin, so a backend or an agent loop can call it inline
+
+Both exist as code in the repo today. Neither is published yet, so `npm install` and `pip install`
+are the next thing on the list. After that, generating voice-friendly text is a single function call
+from either end of your stack.
+
+## The numbers
+
+The reason any of this matters is that it sits _in front of_ a TTS engine, and TTS engines charge
+you — in seconds, in compute, or in money — by how much text you hand them.
+
+I benchmarked it against Kokoro-82M (the `af_sarah` voice at 24 kHz), synthesising each test
+document twice: once as raw markdown, once after conversion.
+
+| Document          | Raw synthesis | After conversion | Time saved |
+| :---------------- | ------------: | ---------------: | ---------: |
+| Code heavy        |        8.01 s |           1.58 s | **−80.3%** |
+| Admonitions mixed |        4.37 s |           2.31 s |     −47.2% |
+| Nested lists      |        4.78 s |           2.66 s |     −44.3% |
+| Technical spec    |        4.31 s |           3.20 s |     −25.6% |
+| Maths heavy       |        5.41 s |           4.37 s |     −19.2% |
+
+Average across the set: roughly **43% less TTS compute**. The code-heavy document is the headline —
+1,239 characters of markdown collapse to 461 characters of speech, and the audio itself drops from
+**2:01 down to 0:30**. Ninety seconds of my life per document that I no longer spend hearing about
+curly braces.
+
+The maths-heavy row is the honest one: it barely improves. Spoken maths is genuinely long — _"a
+squared plus b squared equals c squared"_ is more characters than `$a^2+b^2=c^2$`. The win there
+isn't speed, it is that you can actually understand what you are hearing.
+
+So: put it in front of anything that talks. A voice assistant reading a document back to you, a
+screen-free coding session like the one that started all this, an accessibility layer over your
+docs, a podcast generator pointed at a README. Anywhere text turns into sound, this belongs in the
+middle.
+
+## Try it
+
+Enough description. Below is the actual Rust engine, compiled to WebAssembly and running in your
+browser — not a reimplementation of it. Type into the left pane and the right pane updates.
+
+One thing to be clear about, because the word "voiceover" invites the wrong assumption: **this makes
+text, not audio.** md-voiceover never produces a single sample of sound. It produces the string you
+hand to something that does. Kokoro made every number in the table above, and Kokoro is an 82M
+parameter PyTorch model — it is not coming to a blog page. Putting a real neural voice behind this
+means running it as a service, which is a separate piece of work.
+
+So there is no play button doing real work yet — audio playback is waiting on that hosted voice
+service. What the right pane shows is the exact string you would hand to a TTS engine, and that is
+the whole argument anyway: it was never about which voice reads to you, it is about what you make
+it read.
+
+<VoiceoverDemo
+  fallbackOutput="Heading: Deployment guide. Run the migration before restarting the workers. Section: Rollback. First, Stop the queue. Second, Restore the snapshot. Warning alert callout. Dropping a column breaks active clients."
+  samples={[
+    {
+      label: 'A whole page',
+      markdown: `# Deployment guide
+
+Run the migration **before** restarting the workers.
+
+## Rollback
+
+1. Stop the queue
+2. Restore the snapshot
+
+> [!WARNING]
+> Dropping a column breaks active clients.`,
+
+    },
+    {
+      label: 'Code',
+      markdown: `Install it first:
+
+\`\`\`bash
+cargo add mjx-md-voiceover
+\`\`\`
+
+Then call it:
+
+\`\`\`rust
+let speech = parse_and_format(md)?;
+\`\`\``,
+    },
+    {
+      label: 'Maths',
+      markdown: `The energy is $E = mc^2$, and the norm is $\\sqrt{x^2 + y^2}$.`,
+    },
+    {
+      label: 'Diagram',
+      markdown: `\`\`\`mermaid
+sequenceDiagram
+A->>B: hello
+\`\`\``,
+},
+]}
+/>
+
+<Callout tone="note" title="Try it on your own text">
+  Paste in a README, or the last thing an agent wrote for you. The conversion
+  runs entirely in this tab — nothing is sent anywhere. What comes out is the
+  text you would hand to your TTS engine of choice.
+</Callout>
+
+If you want to poke at the engine itself, the code lives at
+[jaxmatrix/mjx-md-voiceover](https://github.com/jaxmatrix/mjx-md-voiceover) — and the moment the
+npm and PyPI packages land, putting this in front of your own agent will be one function call.
