@@ -19,9 +19,10 @@ export const author = {
   email: 'jaishukla7768@gmail.com',
   blurb:
     'I build the whole stack — agent systems, full-stack products, embedded firmware and the machines underneath. These are the notes.',
-  /* Derived from public/isolated_self.png + self_mask.png, cropped square and
-     scaled to 240px. Regenerate or replace once the cutout is finalised. */
-  avatar: { src: '/blog/author.jpg', alt: 'Jai Shukla' },
+  /* Cropped from public/self.png by tools/prepare-images.sh. Portrait 4:5, not
+     square: a square crop cuts the chin off. Alpha is kept so it sits on the
+     card background rather than carrying its own. */
+  avatar: { src: '/blog/author.webp', alt: 'Jai Shukla' },
 };
 
 export const blog = {

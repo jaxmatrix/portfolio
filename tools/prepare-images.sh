@@ -23,7 +23,7 @@ for tool in convert ffmpeg; do
   command -v "$tool" >/dev/null || { echo "missing required tool: $tool" >&2; exit 1; }
 done
 
-mkdir -p "$PUB/builds" "$PUB/gallery" "$PUB/scrapbook"
+mkdir -p "$PUB/builds" "$PUB/gallery" "$PUB/scrapbook" "$PUB/blog"
 
 # -auto-orient is load-bearing: several sources carry EXIF rotation and render
 # sideways without it (ChemicalDeposition_UpdatedMachine is the obvious one).
@@ -86,6 +86,14 @@ if [ -n "$CHROME" ]; then
 else
   echo "  no chromium on PATH — skipping" >&2
 fi
+
+echo "== blog author avatar =="
+# Portrait 4:5 crop of the head-and-shoulders cutout. A square crop takes the
+# chin off, which is why this is not just a -resize of self.png. Alpha is kept
+# (hence webp, not jpg) so the cutout sits on the sidebar card's own background.
+convert "$PUB/self.png" -crop 620x775+150+80 +repage -resize 240x300 \
+  -quality 88 -strip -define webp:alpha-quality=100 "$PUB/blog/author.webp"
+printf '  %-52s %s\n' "author.webp" "$(du -h "$PUB/blog/author.webp" | cut -f1)"
 
 echo "== gallery (engineering) =="
 gallery=(

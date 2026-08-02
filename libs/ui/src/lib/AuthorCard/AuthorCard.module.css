@@ -9,11 +9,13 @@
   margin-bottom: 14px;
 }
 
-/* Square, like everything else in this system. */
+/* Portrait 4:5 rather than square — the source is a head-and-shoulders cutout,
+   and squaring it crops the chin off. */
 .avatar {
-  width: 46px;
-  height: 46px;
+  width: 56px;
+  height: 70px;
   object-fit: cover;
+  object-position: top;
   border: 1px solid var(--line);
   flex-shrink: 0;
 }
