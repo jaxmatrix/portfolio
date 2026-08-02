@@ -1,0 +1,195 @@
+---
+title: 'Unlocking the software behind an open standard — OOXML (pptx, docx, xlsx)'
+date: 2026-08-03
+summary: >-
+  How an idea that died at a day job became mjx-ooxml-rs: a pure-Rust,
+  fidelity-first OOXML library built through 107 AI-written pull requests,
+  planned in Linear, and tested down to the byte.
+tags: [Rust, OOXML, Office]
+repo: https://github.com/jaxmatrix/mjx-ooxml-rs
+updated: 2026-08-03
+draft: false
+---
+
+When I was working at [Slidely](https://slidely.ai), we used to cry over the VB.NET PowerPoint APIs. The documentation
+covered a polite basic set of cases, and every production feature lived in the undocumented
+remainder. My favourite example is table cells: in PowerPoint Interop there is no property
+that tells you a cell is part of a merge. Grid positions that belong to the same merged cell hand
+you back the same underlying object, so the only way to check for a merge is to compare cell
+identities across positions — which was not clear at first, and nobody wrote it down. Every new
+feature posed a different set of these puzzles, and we discovered how the APIs actually behaved
+through iteration — and through digging up internet archives until the answer surfaced in some
+article from 2011.
+
+## The idea that got shelved
+
+When we started with AI-assisted coding at Slidely in July 2025, none of it worked. The code coming
+out was genuinely bad — even the early Claude models weren't good enough — so most of the stack
+there is still handcrafted. But an idea surfaced anyway: what if we built our _own_ API from the
+OOXML standard itself — ECMA-376, the specification behind every `.pptx`, `.docx` and `.xlsx` — and
+stopped depending on APIs whose bugs were only documented in ancient forum threads?
+
+It sounded like it would simplify our lives. It also sounded terrifying: unknown legacy-format
+support, the fear that if this were feasible it would already exist on the internet, and no
+bandwidth to gamble on a tool. The idea was scrapped.
+
+I never quite gave up on it, though. I kept unzipping Office files and staring at the XML, trying
+to gauge how much of the standard the real files actually used. It turns out Ecma has published
+the whole thing — including the Transitional variant that carries exactly the legacy
+baggage we were afraid of. Then, while debugging a shape bug where we had to guess adjustment
+values, I ended up inside `presetShapeDefinitions.xml` from the ECMA-376 references: every preset
+shape PowerPoint knows, defined with all of its geometry math, sitting in a file. That was the
+moment the belief hardened. The standard was complete enough that an AI could build a parser from
+it — and that parser would unlock programmatic PowerPoint, Word and Excel without fine-tuning any
+model on OOXML markup, which is a lot of junk to wade through when the objective is "a box with
+hello written in it".
+
+## Second wind
+
+Several months later, in June 2026, I read the news about Bun's rewrite in Rust, and it pushed
+me to revisit the shelved idea — this time with tools that had grown dramatically more capable. In
+July 2026 I started building [mjx-ooxml-rs](https://github.com/jaxmatrix/mjx-ooxml-rs): a
+pure-Rust, cross-platform library to parse, edit and generate OOXML, designed from day one to be
+lightweight and to reach other languages — Python, TypeScript and WASM — through bindings rather
+than rewrites.
+
+The overriding requirement, decided before any code existed, is **fidelity**: open any file someone
+else wrote, edit it, write it back without corrupting a single part you did not touch. That one
+sentence ended up shaping the entire architecture.
+
+## Let the agent read the spec
+
+The workflow started upside down from a normal project: before writing any code, I pointed Claude
+at the ECMA-376 5th edition documents themselves and had it scan through the standard, then turn
+what it found into tickets in Linear. The plan for the whole library lives in a Linear project, not
+in my head.
+
+The trick that made this scale is where the context lives. The Linear **project description** is
+the stable context — the round-trip contract, the architecture rules, the naming convention, the
+process. Every session reads it first. Each individual issue carries only what is specific to its
+own task. So a fresh session doesn't start from zero; it starts from a constitution.
+
+The process itself is written down as non-negotiable, and every unit of work follows it:
+
+1. **Plan** the atomic piece of work.
+2. **Plan-Optimization** — before writing code, refine the design for low memory, fast and
+   reliable execution, and correctness. No monkey-patching, no shortcuts.
+3. **Thorough atomic implementation** — finished, correct, tested, before moving on. No half-done
+   atoms, no "fix it later" placeholders in shipped code.
+
+And every working session begins with a discussion — bounce the plan around, converge, _then_
+touch code. Extra planning time is explicitly welcome. It is the same lesson from the Slidely
+years, inverted: the expensive part of software is never the typing, it is discovering the design
+by accident after you shipped the wrong one.
+
+A few more working agreements turned out to be load-bearing across a hundred-plus AI-written PRs:
+
+- **Every PR branches from `main`. Never stack.** This rule is written in blood: one stacked PR
+  merged into its already-retired base and quietly stranded 1,078 lines while `main` looked
+  perfectly healthy. After any merge, verify the content actually reached `main` — don't trust the
+  "merged" badge.
+- **Every library-changing PR bumps the patch version and adds a CHANGELOG entry** as its last
+  commit. 107 PRs, versions `0.0.1` through `0.0.60`, and the changelog reads as the project's
+  diary.
+- **Each finished workstream writes a handoff document, then the document is frozen.** History
+  stays history; the live plan stays in Linear. Alongside those, Claude's persistent memory
+  accumulated its own notes across the 31 sessions it took to build this — which rules I insist
+  on, which decisions were locked, which mistakes not to repeat.
+
+One rule deserves its own paragraph: **naming**. OOXML identifiers are cryptic — `ST_OnOff`,
+values like `t`, `ctr`, `dist` — and I banned all of it from the public API. Every public
+identifier must be self-explanatory, and where a wire token's meaning can't be inferred, the name
+comes from the ECMA-376 prose itself, extracted with `pdftotext`, never guessed. That is how
+`wordArtVertRtl` turned out to mean _"Vertical WordArt Right to Left"_ — a different word order
+from all its siblings, which the spec chose and we therefore kept.
+
+## The story 107 pull requests tell
+
+PR #1 built the fidelity preservation tree. PRs #4 through #8 built the copy-on-write edit surface
+over the package, a `#[derive(FromXml, ToXml)]` proc-macro so the XML model writes itself, and the
+first end-to-end moment: open a real `.pptx`, edit it, save it, and have LibreOffice open the
+result without complaint.
+
+From there, every feature became a lettered workstream — broken into atoms, one atom per PR:
+
+| Workstream                       | Atoms   | What landed                                                            |
+| :------------------------------- | :------ | :--------------------------------------------------------------------- |
+| Preset geometry                  | batches | all typed preset shapes, generated from the spec, in batches of 43, 34, 12… |
+| Fill / outline / effects         | O1–O4, E1–E4 | the typed models, plus _effective_ resolution up the slide → layout → master → theme ladder |
+| Text formatting                  | T1–T6   | runs, paragraphs, bullets, fonts, and the full inheritance ladder      |
+| Tables                           | B1–B6   | the interned-cell revenge arc: model, styling, merging, row/column edits, effective formatting |
+| Groups                           | G1–G4   | address shapes inside groups, cursors, absolute bounds, group/ungroup  |
+| Charts                           | C0–C4   | bar/line/pie/area/scatter read, series edits, `add_chart` authoring    |
+| Legacy (VML / OLE / ActiveX / Ink) | V1, P1–P4 | preserve-first round-trips for everything the 90s left behind        |
+| Custom geometry                  | CG1–CG5 | `a:custGeom` fully typed — arbitrary paths, not just presets           |
+
+Yes — the library that exists because of undocumented interned table cells now has a six-atom
+tables workstream with merge-aware formatting and effective cell styling. B1 through B6 felt
+personal.
+
+PR #107 closed the loop the way the project started: documentation. A five-page usage guide whose
+48 doctests all compile against the real API — written, like the tickets, from the position that
+if the prose and the code can drift apart, they will.
+
+## Testing, or: trust nothing, diff everything
+
+Fidelity is not a vibe, it is a test suite — 1,052 tests green as of `0.0.60`. The round-trip
+contract is asserted mechanically: every write test checks its structural change **and** that every
+part it did not touch is byte-identical after the round trip; every read test asserts that merely
+reading a file dirtied nothing. Untouched parts stay raw bytes and re-emit verbatim; unknown
+elements and attributes ride along in a preservation bucket instead of being dropped.
+
+CI also opens the output in LibreOffice as a canary. That catches decks that are outright broken —
+but it turns out LibreOffice is _permissive_, and a canary that forgives everything proves nothing.
+Two pieces of invalid hand-authored markup lived in seven test fixtures indefinitely because
+LibreOffice shrugged at them. So `0.0.60` added the stricter gate: validate everything we author
+with `xmllint` against the ECMA-376 XSDs themselves. PowerPoint is strict, PowerPoint compatibility
+is the point, and the schema doesn't shrug.
+
+## Where it stands
+
+Today the library is 14 crates in one workspace, layered strictly downward — XML and packaging
+foundations at the bottom, shared DrawingML in the middle, the `.pptx` format crate on top — with
+`unsafe` denied workspace-wide and no `unwrap` on any input the library didn't write itself. For
+PowerPoint, the surface covers text with full inheritance, tables, speaker notes, hyperlinks,
+groups, 3-D, charts, custom geometry, and preserve-first round-trips of the legacy formats. All of
+it built in around two and a half weeks: 107 PRs, 340 commits, 31 sessions.
+
+Honesty section, because the docs have one too: an authored chart carries cached data only, with no
+embedded workbook behind it yet; there is no evaluator for shape guide formulas; and a few colour
+transforms are implemented straight from the spec prose without a reference renderer to check
+against.
+
+## v0.1 — PowerPoint, complete
+
+The next milestone is `v0.1`, and it means one specific thing: **PowerPoint is complete and the
+public API stabilises.** The milestone is 73% done, and what remains is deliberately unglamorous:
+
+- **Schema validity as a standing gate** — never emit markup that deviates from ECMA-376
+  (in progress).
+- **Manual validation** of every shipped feature against real files, before the version number
+  makes a promise.
+- **The external surface** — the `mjx-ooxml` facade crate, plus Python bindings through PyO3 and
+  WASM/TypeScript bindings. This is the part I care about most: the same engine, callable from
+  whichever side of the stack you live on.
+- **The API review pass** — because the rule since day one is that ergonomics problems get fixed
+  before stabilisation, not deferred. A loop in a feature's own example code counts as a design
+  defect.
+
+After that, the roadmap walks the rest of the office suite: Word for `v0.2`, Excel for `v0.3`,
+then charts with real embedded workbooks, and eventually rendering.
+
+Somewhere at Slidely there is still a VB.NET service guessing at adjustment values. This project
+is my long-delayed reply to it: the standard was public the whole time — it just needed someone,
+or something, willing to read all of it.
+
+## Related links
+
+- [ECMA-376 — Office Open XML file formats](https://ecma-international.org/publications-and-standards/standards/ecma-376/)
+- [How to use the presetShapeDefinitions.xml file and fun with DrawingML](https://learn.microsoft.com/en-us/archive/blogs/openspecification/how-to-use-the-presetshapedefinitions-xml-file-and-fun-with-drawingml)
+- [ECMA-376 editions at the Library of Congress](https://www.loc.gov/preservation/digital/formats/fdd/fdd000397.shtml)
+- [Rewriting Bun in Rust](https://bun.com/blog/bun-in-rust)
+- [mjx-ooxml-rs on GitHub](https://github.com/jaxmatrix/mjx-ooxml-rs)
+- [Slidely.ai](https://slidely.ai)
+
+Fun fact: somewhere along the way I was also a little inspired by the idea of _MacroHard_ 😉😂
