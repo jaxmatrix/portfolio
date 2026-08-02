@@ -64,11 +64,6 @@ export default function BlogIndexPage() {
                   dateDisplay={featured.dateDisplay}
                   readingLabel={`${featured.readingMinutes} min read`}
                   tags={tagLinks(featured.tags)}
-                  cover={
-                    featured.cover
-                      ? { src: featured.cover, alt: featured.coverAlt ?? '' }
-                      : undefined
-                  }
                   draft={featured.draft}
                 />
               </div>

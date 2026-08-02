@@ -22,27 +22,6 @@
   object-fit: cover;
 }
 
-/* No-cover fallback: the machinist grid paper used elsewhere on the site. */
-.slot {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-.slotCoord {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--plasma);
-  opacity: 0.55;
-}
-
 /* Corner ticks, matching BuildCard. */
 .tl,
 .br {

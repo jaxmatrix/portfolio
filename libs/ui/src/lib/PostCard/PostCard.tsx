@@ -20,8 +20,8 @@ export interface PostCardProps {
   className?: string;
 }
 
-/** Prominent card for the most recent post. Falls back to a grid-paper panel
- *  with the coordinate when the post has no cover image. */
+/** Prominent card for the most recent post. The media band renders only when
+ *  the post has a cover image. */
 export function PostCard({
   href,
   title,
@@ -38,17 +38,13 @@ export function PostCard({
 
   return (
     <article className={[styles.card, className].filter(Boolean).join(' ')}>
-      <a className={styles.media} href={href} aria-hidden="true" tabIndex={-1}>
-        {cover ? (
+      {cover && (
+        <a className={styles.media} href={href} aria-hidden="true" tabIndex={-1}>
           <img className={styles.cover} src={cover.src} alt={cover.alt} />
-        ) : (
-          <span className={styles.slot}>
-            <span className={styles.slotCoord}>{coord ?? 'LOG'}</span>
-          </span>
-        )}
-        <span className={styles.tl} />
-        <span className={styles.br} />
-      </a>
+          <span className={styles.tl} />
+          <span className={styles.br} />
+        </a>
+      )}
 
       <div className={styles.body}>
         <div className={styles.head}>
