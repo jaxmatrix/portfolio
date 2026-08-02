@@ -53,7 +53,7 @@ frame() {
 echo "== build card media =="
 derive "$ASSETS/mjx-hermes.jpeg" "$PUB/builds/mjx-hermes.webp"
 derive "$ASSETS/dexkitty.png"    "$PUB/builds/dexkitty.webp"
-derive "$RAW/AnExperimentMadeUsingSLAPrintingAndScreenPrinting.jpg" "$PUB/builds/biosensors.webp"
+derive "$RAW/EtchingElectrodes18Electrodes.jpg" "$PUB/builds/biosensors.webp"
 derive "$RAW/PotentioStateV4_StartupWithRustFirmware.jpg"           "$PUB/builds/potentiostat.webp"
 derive "$RAW/FirstSetup_DepositionMachine.jpg"                      "$PUB/builds/deposition-machine.webp"
 # No still exists of the control app. The clip is one static phone-shot of a
@@ -99,7 +99,7 @@ gallery=(
   V2PotentioStat:potentiostat-v2
   V1PotentioStat:potentiostat-v1
   FixingRustDriverForTheDisplay:rust-display-driver
-  EtchingElectrodes18Electrodes:electrodes-18
+  AnExperimentMadeUsingSLAPrintingAndScreenPrinting:multiplexed-sensor
   laserEtchedElectrode:screen-printed-cells
   MicroFluidicsAndElectrochemicalSetup:microfluidics
   HomeLab_IITKharagpur:home-lab

@@ -35,7 +35,7 @@ export const Carousel: Story = {
       { src: '/gallery/deposition-rig.webp', caption: 'The 5-axis deposition rig, first full assembly.' },
       { src: '/gallery/sputtering-chamber.webp', caption: 'The RF/DC sputtering chamber before the teardown.' },
       { src: '/gallery/potentiostat-v4.webp', caption: 'Potentiostat v4 — a Pico W driving the analog front end.' },
-      { src: '/gallery/electrodes-18.webp', caption: 'Eighteen electrodes across a chip the size of a fingertip.' },
+      { src: '/gallery/multiplexed-sensor.webp', caption: 'A multiplexed sensor on Kapton, chamber bonded over the electrodes.' },
       { src: '/gallery/rust-display-driver.webp', caption: 'Writing an ILI9225 SPI driver in Rust.' },
       { src: '/gallery/home-lab.webp', caption: 'The hostel-room lab at IIT Kharagpur.' },
     ],

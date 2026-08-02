@@ -198,7 +198,7 @@ export const builds: BuildData[] = [
     ],
     image: '/builds/biosensors.webp',
     imageAlt:
-      'A multiplexed sensor held between two fingers: seven screen-printed electrodes radiating from a centre well on Kapton, with an SLA-printed chamber bonded over it',
+      'A fingertip-sized chip beside a thumb for scale, carrying eighteen micropatterned electrodes fanned out from a common point in 50µm traces',
   },
   {
     tag: 'AI systems',
@@ -341,9 +341,9 @@ export const gallery: GalleryData[] = [
       'Writing an ILI9225 SPI display driver in Rust for the Pico — source on the monitor, the display itself wired up on the desk.',
   },
   {
-    src: '/gallery/electrodes-18.webp',
+    src: '/gallery/multiplexed-sensor.webp',
     caption:
-      'Eighteen electrodes fanned out across a chip the size of a fingertip, etched down to 50µm traces.',
+      'A multiplexed sensor on Kapton: seven screen-printed electrodes radiating from a centre well, with an SLA-printed chamber bonded over it.',
   },
   {
     src: '/gallery/screen-printed-cells.webp',
