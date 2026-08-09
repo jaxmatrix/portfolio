@@ -1,64 +1,30 @@
-/* Sibling of HeroArt: same column slot. The portrait is a transparent cut-out
-   with no frame fill behind it — the round shape reads purely from the light. */
 .heroPortrait {
   width: 100%;
 }
 
+/* Tall oval — hard fill, soft ~10px feather only at the rim. */
 .frame {
   position: relative;
-  width: 100%;
-}
-
-/* Soft circular bloom. Hollow through the middle so it never reads as a disc
-   background — it only lights the space around the figure. */
-.bloom {
-  position: absolute;
-  inset: -16%;
+  width: 86%;
+  margin: -35px auto 0;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 48%,
-    rgba(169, 63, 191, 0) 38%,
-    rgba(169, 63, 191, 0.15) 62%,
-    rgba(185, 102, 15, 0.09) 80%,
-    rgba(169, 63, 191, 0) 100%
+  -webkit-mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    #000 0%,
+    #000 calc(100% - 10px),
+    transparent 100%
   );
-  filter: blur(30px);
-  pointer-events: none;
+  mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    #000 0%,
+    #000 calc(100% - 10px),
+    transparent 100%
+  );
 }
 
-/* The photo runs off the bottom edge of its own frame, so fade both layers out
-   there rather than leaving a hard horizontal cut through the jacket. */
-.subject {
-  position: absolute;
-  inset: 0;
-  -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 99%);
-  mask-image: linear-gradient(to bottom, #000 74%, transparent 99%);
-}
-
-/* The cut-out's alpha, filled with plasma and blurred: a halo that follows the
-   figure's own outline. This is the "the mask is glowing" layer. */
-.aura {
-  position: absolute;
-  inset: 0;
-  background: var(--plasma-bright);
-  -webkit-mask-image: var(--portrait);
-  mask-image: var(--portrait);
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  filter: blur(26px);
-  opacity: 0.75;
-  pointer-events: none;
-}
-
-/* z-index so the photo paints over .aura — an absolutely positioned sibling
-   would otherwise sit above in-flow content. */
 .shot {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  inset: 0;
 }
 
 .shot,
@@ -66,7 +32,12 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+}
+
+/* Cover + top anchor crops the artwork's bottom edge with the oval itself. */
+.shot img {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .artCap {

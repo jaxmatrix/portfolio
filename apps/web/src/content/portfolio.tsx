@@ -49,12 +49,11 @@ export const hero = {
     </>
   ),
   portrait: {
-    src: '/self.png',
-    srcWebp: '/self.webp',
+    src: '/self_2.png',
     alt: 'Jai Shukla',
-    // Intrinsic size of /self.png — keep in sync if the asset is regenerated.
-    width: 900,
-    height: 900,
+    // Intrinsic size of /self_2.png — keep in sync if the asset is regenerated.
+    width: 378,
+    height: 495,
   },
 };
 

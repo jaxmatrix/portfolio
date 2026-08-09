@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react';
 import styles from './HeroPortrait.module.css';
 
 export interface HeroPortraitProps {
@@ -15,7 +14,7 @@ export interface HeroPortraitProps {
   className?: string;
 }
 
-/** Cut-out portrait for the hero column, lit from behind by its own silhouette. */
+/** Portrait for the hero column, cropped into a vertical ellipse frame. */
 export function HeroPortrait({
   src,
   srcWebp,
@@ -27,23 +26,16 @@ export function HeroPortrait({
 }: HeroPortraitProps) {
   return (
     <div className={[styles.heroPortrait, className].filter(Boolean).join(' ')}>
-      <div className={styles.frame} style={{ aspectRatio: `${width} / ${height}` }}>
-        <span className={styles.bloom} aria-hidden="true" />
-        {/* Aura and photo share a wrapper so one bottom fade covers both and they
-            dissolve on exactly the same line. */}
-        <div className={styles.subject}>
-          {/* The cut-out's own alpha, tinted and blurred — this is what makes the
-              silhouette itself look lit rather than sitting on a coloured disc. */}
-          <span
-            className={styles.aura}
-            aria-hidden="true"
-            style={{ '--portrait': `url(${src})` } as CSSProperties}
-          />
-          <picture className={styles.shot}>
-            {srcWebp && <source srcSet={srcWebp} type="image/webp" />}
-            <img src={src} alt={alt} width={width} height={height} />
-          </picture>
-        </div>
+      {/* Slightly shorter than the source so the oval itself clips the
+          artwork's bottom edge — image and frame stay one scaled unit. */}
+      <div
+        className={styles.frame}
+        style={{ aspectRatio: `${width} / ${Math.round(height * 0.9)}` }}
+      >
+        <picture className={styles.shot}>
+          {srcWebp && <source srcSet={srcWebp} type="image/webp" />}
+          <img src={src} alt={alt} width={width} height={height} />
+        </picture>
       </div>
       {caption && <div className={styles.artCap}>{caption}</div>}
     </div>
