@@ -32,7 +32,7 @@ export const resumeCta: NavLinkData = { label: 'Résumé ↗', href: resumeHref 
 
 export const hero = {
   status:
-    'Building an agent OS on a Hermes fork · open to problems that don’t stop at the app layer',
+    'Shipped Allr, a universal AI agent app, to the stores in five weeks · open to problems that don’t stop at the app layer',
   heading: (
     <>
       I build the whole stack — from the <em>model</em> down to the <em>metal</em>.
@@ -41,7 +41,7 @@ export const hero = {
   sub: 'Jai Shukla. AI and systems engineer — I ship agent systems and the full-stack products around them. When a problem runs deeper than the app, I keep going: browser runtimes, Rust firmware, the machines themselves.',
   meta: (
     <>
-      <b>Now:</b> AI &amp; systems engineer · building an agent OS
+      <b>Now:</b> AI &amp; systems engineer · building Allr, a universal agent platform
       <br />
       <b>Depth:</b> agent runtimes · React/TS · Rust · AWS · WebRTC · down to bare metal
       <br />
@@ -63,7 +63,7 @@ export const thesis = {
       Most engineers pick a layer and stay there. <em>I go wherever the problem is.</em>
     </>
   ),
-  body: 'Right now that’s an agent OS — a fork of Nous’s Hermes, with containerized sessions streamed over WebRTC. Before it: an AI product shipped inside PowerPoint, a query language so agents could traverse Revit geometry, the Rust software driving a 5-axis machine, and a potentiostat with its own firmware, built because the instrument I needed didn’t exist. The domains changed; the instinct didn’t — when the tool isn’t there, build it.',
+  body: 'Right now that’s Allr — a universal AI agent platform on a fork of Nous’s Hermes: one codebase across five platforms, Android beta live on the Play Store, iOS in review, with a production messaging gateway and a multi-tenant agent OS behind it. Before it: an AI product shipped inside PowerPoint, a query language so agents could traverse Revit geometry, the Rust software driving a 5-axis machine, and a potentiostat with its own firmware, built because the instrument I needed didn’t exist. The domains changed; the instinct didn’t — when the tool isn’t there, build it.',
 };
 
 export interface PillarData {
@@ -281,6 +281,37 @@ export const builds: BuildData[] = [
     imageAlt:
       'Two mjx-hermes-agent client windows side by side — session list, capabilities, artifacts and cron jobs in the sidebar',
   },
+  {
+    tag: 'Agent platform',
+    year: 'Independent · 2026–present',
+    title: 'Allr — a universal AI agent platform, shipped to the stores',
+    role: 'founder · client · gateway · agent OS',
+    paragraphs: [
+      <>
+        The Hermes fork below, grown into a product. One codebase runs Windows, macOS, Linux,
+        Android and iOS; the Android beta is <b>live on the Play Store</b> and the iOS build is
+        in App Store review — five weeks from first commit to store betas.
+      </>,
+      <span className="hard" key="h">
+        The hard part: <b>shipping the complete thing, not the demo</b>. A production gateway
+        carries the same agent into Telegram, Discord, Slack, WhatsApp and Signal from one
+        process, and a multi-tenant agent OS provisions each user — SSO, isolated stack,
+        observability — with a single script.
+      </span>,
+    ],
+    chips: ['Tauri v2', 'Rust', 'Android / iOS', 'Multi-tenant infra', 'Agents'],
+    links: [
+      { label: 'allr.work ↗', href: 'https://allr.work', external: true },
+      {
+        label: 'github.com/jaxmatrix/mjx-hermes-agent ↗',
+        href: 'https://github.com/jaxmatrix/mjx-hermes-agent',
+        external: true,
+      },
+    ],
+    image: '/builds/allr.webp',
+    imageAlt:
+      'The Allr client mid-task — an agent building and locally hosting a browser game, with gateway status, model picker and tool runs visible',
+  },
 ];
 
 export interface GalleryData {
@@ -430,10 +461,10 @@ export const timeline: TimelineData[] = [
     role: 'Independent',
     org: (
       <>
-        <b>mjx-hermes-agent</b> · an agent OS on a Hermes fork
+        <b>Allr</b> · a universal AI agent platform on a Hermes fork
       </>
     ),
-    desc: 'Cross-platform client on a fork of Nous Research’s Hermes: containerized sessions streamed over WebRTC, and browser work recorded once and replayed deterministically.',
+    desc: 'Grew a fork of Nous Research’s Hermes into Allr: one codebase on Windows, macOS, Linux, Android and iOS — Android beta live on the Play Store, iOS in review — plus a production messaging gateway and a multi-tenant agent OS.',
   },
   {
     when: 'FEB 2025 — JUN 2026',
