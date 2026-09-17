@@ -116,6 +116,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* clears fixed .hud-nav (~61px) + breathing room */
 }
 
 body {
